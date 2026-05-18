@@ -8,7 +8,8 @@ public enum EntityAnimState
     Walk,
     Run,
     Jump,
-    Atk
+    Charge
+
 }
 
 public class AnimatorController : MonoBehaviour
@@ -21,18 +22,18 @@ public class AnimatorController : MonoBehaviour
     // 이 상태에 따른 애니메이션 재생을 여기서만 모아서 해줄려고
     public void SetState(EntityAnimState newState) // 새로운 상태
     {
-        if (newState == EntityAnimState.Idle && _currentAnimState == EntityAnimState.Idle)
+        if (newState == _currentAnimState)
         {
             return;
         }
 
         //비교를 했는데, 같은 값이 아니고, 이제 동작을 바꿔도 된다면 이렇게 대입
         _currentAnimState = newState;
+        ResetAllAnimParameters();
 
         switch (_currentAnimState)
         {
             case EntityAnimState.Idle:
-                ResetAllAnimParameters();
                 break;
             case EntityAnimState.Walk:
                 Animator_Entity.SetBool("IsWalk", true);
@@ -43,12 +44,10 @@ public class AnimatorController : MonoBehaviour
             case EntityAnimState.Jump:
                 Animator_Entity.SetBool("IsJump", true);
                 break;
-            case EntityAnimState.Atk:
-                Animator_Entity.SetTrigger("IsAtk");
+            case EntityAnimState.Charge:
+                Animator_Entity.SetBool("IsCharge", true);
                 break;
             default:
-                // 의도되지 않은 상황이라면 모든 파라미터를 초기화한다
-                ResetAllAnimParameters();
                 break;
         }
     }
@@ -58,9 +57,6 @@ public class AnimatorController : MonoBehaviour
         Animator_Entity.SetBool("IsWalk", false);
         Animator_Entity.SetBool("IsRun", false);
         Animator_Entity.SetBool("IsJump", false);
+        Animator_Entity.SetBool("IsCharge", false);
     }
-
-
-
-
 }

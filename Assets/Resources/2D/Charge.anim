@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AnimSit
+  m_Name: Charge
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -21,7 +21,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 1999894652, guid: a1e9a6713c5d4ef44a1bd86d1e0491c1, type: 3}
+      value: {fileID: -315704898, guid: a1e9a6713c5d4ef44a1bd86d1e0491c1, type: 3}
     - time: 0.083333336
       value: {fileID: -1049548333, guid: a1e9a6713c5d4ef44a1bd86d1e0491c1, type: 3}
     attribute: m_Sprite
@@ -46,7 +46,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 1999894652, guid: a1e9a6713c5d4ef44a1bd86d1e0491c1, type: 3}
+    - {fileID: -315704898, guid: a1e9a6713c5d4ef44a1bd86d1e0491c1, type: 3}
     - {fileID: -1049548333, guid: a1e9a6713c5d4ef44a1bd86d1e0491c1, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2

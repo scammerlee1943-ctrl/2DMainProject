@@ -1,4 +1,5 @@
-﻿using UnityEditor.Build.Pipeline;
+﻿using Unity.Collections;
+using UnityEditor.Build.Pipeline;
 using UnityEngine;
 
 // +) 어떤 컴포넌트가 필수로 필요하다는 것을 강제할 수 있다
@@ -7,11 +8,12 @@ public class Player : MonoBehaviour
 {
     [Header("이동 설정")]
     [SerializeField] private float _moveSpeed = 8f;
-    [SerializeField] private float _jumpForce = 12f;
     [Header("점프 설정")]
     [SerializeField] private float _minJumpForce = 5f;
     [SerializeField] private float _maxJumpForce = 20f;
-    [SerializeField] private float _chargeSpeed = 10f;
+    [SerializeField] private float _chargeSpeed = 30f;
+    [Header("점프 각도 설정")]
+    [Range(15f, 75f)][SerializeField] private float _jumpAngle = 35f;
 
     [Header("지면 체크 설정")]
     [SerializeField] private Transform _groundCheck;    // 발 밑에 배치할 빈 오브젝트
@@ -26,7 +28,10 @@ public class Player : MonoBehaviour
     private float _horizontalInput;
     private bool _lookRight = true;
     private float _currentJumpForce = 0f;
+    private bool _canJump = true;
     private bool _isCharging = false;
+    private float _jumpDirection;
+    private bool _isJumping = false;
 
     void Awake()
     {
@@ -51,21 +56,30 @@ public class Player : MonoBehaviour
         }
 
         // 2. 점프 입력
-        if (Input.GetKey(KeyCode.Space) && _isGrounded)
+        if (Input.GetKeyDown(KeyCode.Space) && _isGrounded && _canJump)
+        {
+            _rigidBody.linearVelocity = new Vector2(0f, _rigidBody.linearVelocity.y);
+        }
+
+        if (Input.GetKey(KeyCode.Space) && _isGrounded && _canJump)
         {
             _isCharging = true;
+            _jumpDirection = _lookRight ? 1f : -1f;
             _currentJumpForce += _chargeSpeed * Time.deltaTime;
             _currentJumpForce = Mathf.Clamp(_currentJumpForce, _minJumpForce, _maxJumpForce);
+
+            ChangePlayerState(EntityAnimState.Charge);
         }
-        if (Input.GetKeyUp(KeyCode.Space) && _isGrounded)
+        if(Input.GetKeyUp(KeyCode.Space) && _isCharging)
         {
+            _canJump = true;
             Jump();
-            _isCharging = false;
+
         }
 
 
-            // 3. 캐릭터 방향 전환 (Flip)
-            if (_horizontalInput > 0 && !_lookRight)
+        // 3. 캐릭터 방향 전환 (Flip)
+        if (_horizontalInput > 0 && !_lookRight)
         {
             Flip();
         }
@@ -74,15 +88,16 @@ public class Player : MonoBehaviour
             Flip();
         }
 
-        // 이동을 한다라는 판정만 우선 해봅시다
-        bool isMoving = (_horizontalInput != 0);
-        ChangePlayerState(isMoving ? EntityAnimState.Walk : EntityAnimState.Idle);
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (_isCharging == false && _isJumping == false)
         {
-            ChangePlayerState(EntityAnimState.Run);
-        }
+            bool isMoving = (_horizontalInput != 0);
+            ChangePlayerState(isMoving ? EntityAnimState.Walk : EntityAnimState.Idle);
 
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                ChangePlayerState(EntityAnimState.Run);
+            }
+        }
     }
 
     private void ChangePlayerState(EntityAnimState newState)
@@ -97,19 +112,45 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         _isGrounded = Physics2D.OverlapCircle(_groundCheck.position, _checkRadius, _groundLayer);
+        if (_isGrounded && _rigidBody.linearVelocity.y <= 0.01f)
+        {
+            _isJumping = false;
+        }
         Move();
     }
 
     void Move()
     {
-        // Y축 속도는 유지하면서 X축 속도만 변경 (관성 유지)
+        if (_isGrounded && !_isCharging && !_isJumping)
+        {
+            // Y축 속도는 유지하면서 X축 속도만 변경 (관성 유지)
         _rigidBody.linearVelocity = new Vector2(_horizontalInput * _moveSpeed, _rigidBody.linearVelocity.y);
+        }
     }
 
     void Jump()
     {
-        // 순간적인 힘을 위로 가함
-        _rigidBody.linearVelocity = new Vector2(_rigidBody.linearVelocity.x, _currentJumpForce);
+        float radian = _jumpAngle * Mathf.Deg2Rad;
+
+        float dirX = Mathf.Cos(radian) * _jumpDirection;
+        float dirY = Mathf.Sin(radian);
+
+        Vector2 jumpVelocity = new Vector2(dirX, dirY) * _currentJumpForce;
+
+        _isJumping = true;
+
+        _rigidBody.linearVelocity = Vector2.zero;
+        _rigidBody.linearVelocity = jumpVelocity;
+
+        ChangePlayerState(EntityAnimState.Jump);
+
+        _isCharging = false;
+        _canJump = false;
+        Invoke("ResetJump", 0.2f);
+    }
+    void ResetJump()
+    {
+        _canJump = true;
         _currentJumpForce = 0;
     }
 

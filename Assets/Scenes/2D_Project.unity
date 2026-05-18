@@ -399,15 +399,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5014a42a451d55c4c8811e245b92373a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
-  _moveSpeed: 8
-  _jumpForce: 12
+  _moveSpeed: 3
+  _minJumpForce: 5
+  _maxJumpForce: 25
+  _chargeSpeed: 10
+  _jumpAngle: 35
   _groundCheck: {fileID: 1158027342}
   _checkRadius: 0.5
   _groundLayer:
     serializedVersion: 2
     m_Bits: 64
   AnimatorController_Entity: {fileID: 397392578}
-  _scoreUI: {fileID: 0}
 --- !u!50 &397392577
 Rigidbody2D:
   serializedVersion: 5
@@ -421,7 +423,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0
+  m_LinearDamping: 0.05
   m_AngularDamping: 0.05
   m_GravityScale: 5
   m_Material: {fileID: 6200000, guid: ab51040bf9b698c429f8b5566259a631, type: 2}
@@ -1091,7 +1093,7 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741825
-  - first: {x: 1, y: 5, z: 0}
+  - first: {x: 1, y: 4, z: 0}
     second:
       serializedVersion: 2
       m_TileIndex: 17
@@ -11896,8 +11898,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2.65, y: 2.65, z: 2.65}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 397392573}
   m_Father: {fileID: 0}

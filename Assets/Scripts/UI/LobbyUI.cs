@@ -1,0 +1,28 @@
+﻿using UnityEngine;
+
+public class LobbyUI : UIBase
+{
+    [SerializeField] private DaniTechUIButton Button_GameStart;
+    [SerializeField] private DaniTechUIButton Button_GameQuit;
+
+    private void OnEnable()
+    {
+        Button_GameStart.BindOnClickButtonEvent(OnClick_GameStart);
+        Button_GameStart.BindOnClickButtonEvent(OnClick_GameQuit);
+    }
+
+    public void OnClick_GameStart()
+    {
+        DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.LobbyUI);
+
+    }
+
+    public void OnClick_GameQuit()
+    {
+        DaniTechGameManager.Inst.SaveAndEndGame();
+
+
+    }
+
+
+}

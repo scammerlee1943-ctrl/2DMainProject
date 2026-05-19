@@ -12,7 +12,7 @@ public enum EntityAnimState
 
 }
 
-public class AnimatorController : MonoBehaviour
+public class EntityAnimatorController : MonoBehaviour
 {
     [SerializeField] private Animator Animator_Entity;
 

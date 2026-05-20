@@ -17,7 +17,7 @@ public class DaniTechResourceManager : MonoBehaviour
     private Dictionary<string, AsyncOperationHandle> _handles = new Dictionary<string, AsyncOperationHandle>();
 
     //// 1. 에셋 로드 함수 (제네릭 사용)
-    public void LoadAsset<T>(string address, System.Action<T> callback) where T : UnityEngine.Object
+    public void LoadAsset<T>(string address, System.Action<T> callback) where T : Object
     {
         // 이미 로드된 에셋인지 확인
         if (_handles.TryGetValue(address, out AsyncOperationHandle handle))
@@ -44,7 +44,7 @@ public class DaniTechResourceManager : MonoBehaviour
         };
     }
 
-    public async UniTask<T> LoadAsset<T>(string address) where T : UnityEngine.Object
+    public async UniTask<T> LoadAsset<T>(string address) where T : Object
     {
         // 1. 이미 로드된 에셋인지 확인 (캐싱 확인)
         if (_handles.TryGetValue(address, out AsyncOperationHandle handle))

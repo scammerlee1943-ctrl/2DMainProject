@@ -7,7 +7,8 @@ public enum DaniTechUIRootType
     MainUI,
     ContentUI,
     PopupUI,
-    VeryFrontUI
+    VeryFrontUI,
+
 }
 
 public enum DaniTechUIType
@@ -19,6 +20,7 @@ public enum DaniTechUIType
     DNLoadingUI,
     DNDialogueUI,
     DNInfoBookUI,
+    GameBookUI,
     LobbyUI
 }
 

@@ -13,6 +13,8 @@ public class GameBookUI : DaniTechUIBase
     [SerializeField] private Image Image_MainIcon;
     [SerializeField] private Text Text_MainName;
     [SerializeField] private Text Text_Description;
+    [SerializeField] private DaniTechUIButton Button_CloseUI;
+
 
     //[Header("부가 정보")]
    // [SerializeField] private GameObject Layout_SubInfo; // 그 안에 있는 UI요소를 직접 하나하나 껐다 켰다 하는 게 아니라, 그 레이아웃에 대표 오브젝트만 껐다 켰다 하는게 압도적으로 편하다!!
@@ -25,6 +27,27 @@ public class GameBookUI : DaniTechUIBase
     private void OnEnable()
     {
         ReadItemListAndCreateSlot();
+
+        Button_CloseUI.BindOnClickButtonEvent(OnClick_CloseGameBookUI);
+    }
+
+    public void OnClick_CloseGameBookUI()
+    {
+        DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.GameBookUI);
+    }
+
+    private void OnDisable()
+    {
+
+        if (_SlotList.Count > 0)
+        {
+            foreach(var slotKv in _SlotList)
+            {
+                var slot = slotKv.Value; //컴포넌트인데, 얘로 gameObject를 받아올 수 있다!
+                DestroyImmediate(slot.gameObject);
+            }
+            _SlotList.Clear();
+        }
     }
 
     private void ReadItemListAndCreateSlot()

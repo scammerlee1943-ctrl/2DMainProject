@@ -1309,6 +1309,7 @@ MonoBehaviour:
   Image_MainIcon: {fileID: 3732466209419299019}
   Text_MainName: {fileID: 538797627836228996}
   Text_Description: {fileID: 4936919483976149503}
+  Button_CloseUI: {fileID: 4785431841746239734}
   Transform_SlotRoot: {fileID: 9190561509015252472}
 --- !u!1 &7096038762751149733
 GameObject:

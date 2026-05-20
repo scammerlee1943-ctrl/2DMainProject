@@ -32,6 +32,7 @@ public class EntityAnimatorController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (_player == null) return;
         _player.OnStateChanged -= SetState;
     }
     // 외부에서 쉽게 변경을 요청하려고

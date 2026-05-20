@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -24,8 +25,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _checkRadius = 0.5f;
     [SerializeField] private LayerMask LayerMask_Ground;
 
-    [Header("애니메이터")]
-    [SerializeField] private EntityAnimatorController AnimatorController_Entity;
+    public event Action<EntityAnimState> OnStateChanged;
 
     private Rigidbody2D _rigidBody;
     private bool _isGrounded;
@@ -85,13 +85,13 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
+            _isCharging = true;
+            GetJumpDirection();
             _rigidBody.linearVelocity = new Vector2(0f, _rigidBody.linearVelocity.y);
         }
 
         if (Input.GetKey(KeyCode.Space) && _isGrounded && !IsJumping)
         {
-            _isCharging = true;
-            _jumpDirection = _lookRight ? 1f : -1f;
             _currentJumpForce += _chargeSpeed * Time.deltaTime;
             _currentJumpForce = Mathf.Clamp(_currentJumpForce, _minJumpForce, _maxJumpForce);
 
@@ -106,6 +106,21 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && _isCharging)
         {
             Jump();
+        }
+    }
+    private void GetJumpDirection()
+    {
+        if (_horizontalInput == 0)
+        {
+            _jumpDirection = 0f;
+        }
+        else if (_lookRight)
+        {
+            _jumpDirection = 1f;
+        }
+        else
+        {
+            _jumpDirection = -1f;
         }
     }
 
@@ -178,7 +193,7 @@ public class Player : MonoBehaviour
 
     private void ChangePlayerState(EntityAnimState newState)
     {
-        AnimatorController_Entity.SetState(newState);
+        OnStateChanged?.Invoke(newState);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

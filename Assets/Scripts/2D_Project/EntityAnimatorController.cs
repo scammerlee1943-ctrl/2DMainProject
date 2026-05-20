@@ -14,10 +14,26 @@ public enum EntityAnimState
 
 public class EntityAnimatorController : MonoBehaviour
 {
+
     [SerializeField] private Animator Animator_Entity;
-
     private EntityAnimState _currentAnimState;
+    private Player _player;
 
+    private void Awake()
+    {
+        _player = GetComponent<Player>();
+        if(_player == null)
+        {
+            Debug.LogWarning($"Player 컴포넌트를 찾을 수 없습니다 : {gameObject.name}");
+            return;
+        }
+        _player.OnStateChanged += SetState;
+    }
+
+    private void OnDestroy()
+    {
+        _player.OnStateChanged -= SetState;
+    }
     // 외부에서 쉽게 변경을 요청하려고
     // 이 상태에 따른 애니메이션 재생을 여기서만 모아서 해줄려고
     public void SetState(EntityAnimState newState) // 새로운 상태

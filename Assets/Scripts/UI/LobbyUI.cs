@@ -8,13 +8,15 @@ public class LobbyUI : DaniTechUIBase
     private void OnEnable()
     {
         Button_GameStart.BindOnClickButtonEvent(OnClick_GameStart);
-        Button_GameStart.BindOnClickButtonEvent(OnClick_GameQuit);
+        Button_GameQuit.BindOnClickButtonEvent(OnClick_GameQuit);
+
+        DaniTechUIManager.Instance.OpenContentUI(DaniTechUIType.SideUI);
     }
 
     public void OnClick_GameStart()
     {
+        DaniTechUIManager.Instance.OpenContentUI(DaniTechUIType.MenuUI);
         DaniTechUIManager.Instance.CloseContentUI(DaniTechUIType.LobbyUI);
-
     }
 
     public void OnClick_GameQuit()

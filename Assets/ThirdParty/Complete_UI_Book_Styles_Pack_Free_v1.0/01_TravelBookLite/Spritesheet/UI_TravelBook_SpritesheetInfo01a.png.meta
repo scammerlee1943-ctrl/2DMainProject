@@ -1963,7 +1963,7 @@ TextureImporter:
         serializedVersion: 2
         x: 65
         y: 295
-        width: 62
+        width: 30
         height: 2
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -2063,6 +2063,28 @@ TextureImporter:
       bones: []
       spriteID: d45ea94a13c7bb940aa2a243d5a65680
       internalID: -1774557531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_TravelBook_SpritesheetInfo01a_89
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 295
+        width: 30
+        height: 2
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd4526c3a1e34bc4892558bc36c8fd35
+      internalID: 1988726186
       vertices: []
       indices: 
       edges: []
@@ -2171,6 +2193,7 @@ TextureImporter:
       UI_TravelBook_SpritesheetInfo01a_86: 252943832
       UI_TravelBook_SpritesheetInfo01a_87: 889544186
       UI_TravelBook_SpritesheetInfo01a_88: -1774557531
+      UI_TravelBook_SpritesheetInfo01a_89: 1988726186
       UI_TravelBook_SpritesheetInfo01a_9: -97825916
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0

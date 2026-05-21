@@ -43,4 +43,25 @@ public class DaniTechSoundManager : MonoBehaviour
         AudioSourcePlayer.Stop();
     }
 
+
+    public float GetBGMVolume()
+    {
+        return BGMSourcePlayer.volume;
+    }
+
+    public float GetSFXVolume()
+    {
+        return AudioSourcePlayer.volume;
+    }
+
+    public void SetBGMVolume(float volume)
+    {
+        BGMSourcePlayer.volume = volume;
+    }
+
+    public void SetSFXVolume(float volume)
+    {
+        AudioSourcePlayer.volume = volume;
+    }
+
 }

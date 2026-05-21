@@ -21,6 +21,13 @@ public enum DaniTechUIType
     DNDialogueUI,
     DNInfoBookUI,
     GameBookUI,
+    MenuUI,
+    SideUI,
+    SettingUI,
+    MusicUI,
+    SoundVolumeUI,
+    SaveUI,
+    PauseUI,
     LobbyUI
 }
 
@@ -38,8 +45,7 @@ public static class DaniTechUIManagerExtension
 
     public static void ShowStartupUIOnGameStart(this DaniTechUIManager uiManager)
     {
-        uiManager.OpenLoadingUI();
-        uiManager.OpenUI(DaniTechUIRootType.MainUI, DaniTechUIType.DNMainUI);
+        //uiManager.OpenLoadingUI();
         uiManager.OpenContentUI(DaniTechUIType.LobbyUI);
         // 게임 로비 UI를 여기서 오픈해주자 -> uiManager.
         // MainUI도
@@ -81,6 +87,51 @@ public static class DaniTechUIManagerExtension
     public static void OpenInventoryPopup(this DaniTechUIManager uiManger)
     {
         var uiBase = uiManger.OpenContentUI(DaniTechUIType.DNInventory);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+    public static void OpenSetting(this DaniTechUIManager uiManger)
+    {
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.SettingUI);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+    public static void OpenSave(this DaniTechUIManager uiManger)
+    {
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.SaveUI);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+    public static void OpenMusicVolume(this DaniTechUIManager uiManger)
+    {
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.MusicUI);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+    public static void OpenSound(this DaniTechUIManager uiManger)
+    {
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.SoundVolumeUI);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+    public static void OpenPause(this DaniTechUIManager uiManger)
+    {
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.PauseUI);
         if (uiBase == null)
         {
             Debug.LogWarning($"UI가 생성되지 않았습니다");

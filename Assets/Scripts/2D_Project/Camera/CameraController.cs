@@ -17,15 +17,13 @@ public class CameraController : MonoBehaviour
     private void Update()
     {
         float playerY = Transform_Player.position.y;
-        if (!Player_Script.IsJumping)
-        {
-            if (playerY > _cameraY + Camera.main.orthographicSize)
-            {
-                _cameraY += _screenHeight;
-                transform.position = new Vector3(transform.position.x, _cameraY, transform.position.z);
-            }
 
+        if (playerY > _cameraY + Camera.main.orthographicSize)
+        {
+            _cameraY += _screenHeight;
+            transform.position = new Vector3(transform.position.x, _cameraY, transform.position.z);
         }
+
 
         // 플레이어가 화면 위쪽 끝을 넘으면 한 화면 올라감
         if (playerY < _cameraY - Camera.main.orthographicSize)

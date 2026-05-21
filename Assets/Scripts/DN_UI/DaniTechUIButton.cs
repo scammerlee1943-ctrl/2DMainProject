@@ -1,8 +1,10 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
+using UnityEngine.EventSystems;
 
-public class DaniTechUIButton : MonoBehaviour
+public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Button Button_Base;
     [SerializeField] private Text Text_Base;
@@ -24,6 +26,15 @@ public class DaniTechUIButton : MonoBehaviour
     private void OnDisable()
     {
         Button_Base.onClick.RemoveAllListeners();
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        PlayHoverAnimation();
+    }
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        PlayUnHoverAnimation();
     }
 
 
@@ -81,5 +92,46 @@ public class DaniTechUIButton : MonoBehaviour
             bool currentActive = Image_Select.gameObject.activeSelf;
             Image_Select.gameObject.SetActive(!currentActive);
         }
+        PlayClickAnimation();
+
     }
+
+    private void PlayClickAnimation()
+    {
+        // 진행중인 애니메이션 있으면 초기화
+        transform.DOKill();
+        transform.localScale = Vector3.one;
+        transform.localRotation = Quaternion.identity;
+
+        // 크기 X, Y 따로 트윈 (스쿼시 & 스트레치)
+        transform.DOScaleX(0.85f, 0.1f).SetEase(Ease.OutBack)
+            .OnComplete(() => transform.DOScaleX(1f, 0.2f).SetEase(Ease.OutBack));
+        transform.DOScaleY(0.85f, 0.1f).SetEase(Ease.OutBack)
+            .OnComplete(() => transform.DOScaleY(1f, 0.2f).SetEase(Ease.OutBack));
+
+        // 랜덤 방향으로 살짝 회전
+        float randomDir = UnityEngine.Random.Range(0, 2) == 0 ? 1f : -1f;
+        transform.DORotate(new Vector3(0f, 0f, 5f * randomDir), 0.1f).SetEase(Ease.OutBack)
+            .OnComplete(() => transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack));
+    }
+    private void PlayHoverAnimation()
+    {
+        transform.DOKill();
+        // 크기 살짝 커지기
+        transform.DOScaleX(1.1f, 0.2f).SetEase(Ease.OutBack);
+        transform.DOScaleY(1.1f, 0.35f).SetEase(Ease.OutBack);
+        // 랜덤 방향 살짝 회전
+        float randomDir = UnityEngine.Random.Range(0, 2) == 0 ? 1f : -1f;
+        transform.DORotate(new Vector3(0f, 0f, 5f * randomDir), 0.1f).SetEase(Ease.OutBack);
+    }
+
+    private void PlayUnHoverAnimation()
+    {
+        transform.DOKill();
+        // 원래 크기로
+        transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
+        // 회전 원래대로
+        transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack);
+    }
+
 }

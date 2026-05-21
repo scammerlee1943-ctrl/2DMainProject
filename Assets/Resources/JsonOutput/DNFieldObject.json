@@ -50,5 +50,44 @@
     "DropItemDataId": "Item_Carrot_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/Harvest_Carrot"
+  },
+  {
+    "Id": "dropItem_AncientCoin_1",
+    "FieldObjectType": "DropItem",
+    "Name": "동전",
+    "Description": "드랍된 동전",
+    "DropCountRange": [
+      1,
+      5
+    ],
+    "DropItemDataId": "Item_AncientCoin_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_Coin"
+  },
+  {
+    "Id": "dropItem_Key_1",
+    "FieldObjectType": "DropItem",
+    "Name": "열쇠",
+    "Description": "드랍된 열쇠",
+    "DropCountRange": [
+      1,
+      1
+    ],
+    "DropItemDataId": "Item_Key_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_Key"
+  },
+  {
+    "Id": "dropItem_Letter_1",
+    "FieldObjectType": "DropItem",
+    "Name": "편지",
+    "Description": "드랍된 편지",
+    "DropCountRange": [
+      1,
+      1
+    ],
+    "DropItemDataId": "Item_Letter_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_Letter"
   }
 ]

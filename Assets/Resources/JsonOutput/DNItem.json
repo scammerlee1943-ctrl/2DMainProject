@@ -58,5 +58,35 @@
     "MaxStackCount": 5,
     "SellingPrice": 500,
     "IconPath": "Icon/Icon_Item_Carrot_1"
+  },
+  {
+    "Id": "Item_AncientCoin_1",
+    "Name": "고대 동전",
+    "Description": "고대 문명의 흔적이 새겨진 동전",
+    "ItemType": "Normal",
+    "Grade": "Normal",
+    "MaxStackCount": 200,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Item_AncientCoin_1"
+  },
+  {
+    "Id": "Item_Key_1",
+    "Name": "낡은 열쇠",
+    "Description": "어딘가의 문을 열 수 있을 것 같다..",
+    "ItemType": "Normal",
+    "Grade": "Legend",
+    "MaxStackCount": 3,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Item_Key_1"
+  },
+  {
+    "Id": "Item_Letter_1",
+    "Name": "오래된 편지",
+    "Description": "뭐라고 적혀있다.",
+    "ItemType": "Normal",
+    "Grade": "Epic",
+    "MaxStackCount": 5,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Item_Letter_1"
   }
 ]

@@ -1,5 +1,6 @@
-﻿using UnityEngine;
+﻿using DG.Tweening.Core.Easing;
 using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
@@ -28,15 +29,18 @@ public class Player : MonoBehaviour
     public event Action<EntityAnimState> OnStateChanged;
 
     private Rigidbody2D _rigidBody;
-    private bool _isGrounded;
     private float _horizontalInput;
-    private bool _lookRight = true;
     private float _currentJumpForce = 0f;
-    private bool _isCharging = false;
     private float _jumpDirection;
+
+    private bool _isGrounded;
+    private bool _lookRight = true;
+    private bool _isCharging = false;
+    private bool _isJumping;
+    private bool _isWallBouncing = false;
+
     private Vector3 _originVisualLocalPos;
 
-    public bool IsJumping { get; private set; }
 
 
     private void Awake()
@@ -60,11 +64,16 @@ public class Player : MonoBehaviour
 
         if (_isGrounded && _rigidBody.linearVelocity.y <= 0.01f)
         {
-            if (IsJumping)
+            if (_isWallBouncing)
             {
-                _currentJumpForce = 0f;
+                _isWallBouncing = false;
+                CancelInvoke(nameof(ResetWallBouncing));
             }
-            IsJumping = false;
+            if (_isJumping)
+            {
+                _currentJumpForce = _minJumpForce;
+            }
+            _isJumping = false;
         }
 
         Move();
@@ -90,7 +99,7 @@ public class Player : MonoBehaviour
             _rigidBody.linearVelocity = new Vector2(0f, _rigidBody.linearVelocity.y);
         }
 
-        if (Input.GetKey(KeyCode.Space) && _isGrounded && !IsJumping)
+        if (Input.GetKey(KeyCode.Space) && _isGrounded && !_isJumping)
         {
             _currentJumpForce += _chargeSpeed * Time.deltaTime;
             _currentJumpForce = Mathf.Clamp(_currentJumpForce, _minJumpForce, _maxJumpForce);
@@ -138,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void HandleAnimationState()
     {
-        if (_isCharging == false && IsJumping == false)
+        if (_isCharging == false && _isJumping == false)
         {
             bool isMoving = (_horizontalInput != 0);
             ChangePlayerState(isMoving ? EntityAnimState.Walk : EntityAnimState.Idle);
@@ -152,9 +161,15 @@ public class Player : MonoBehaviour
 
     private void Move()
     {
-        if (_isGrounded && !_isCharging && !IsJumping)
+        if (_isGrounded && !_isCharging && !_isJumping)
         {
             _rigidBody.linearVelocity = new Vector2(_horizontalInput * _moveSpeed, _rigidBody.linearVelocity.y);
+        }
+
+        else if (_isWallBouncing)
+        {
+            float airFriction = 0.95f;
+            _rigidBody.linearVelocity = new Vector2(_rigidBody.linearVelocity.x * airFriction, _rigidBody.linearVelocity.y);
         }
     }
 
@@ -166,7 +181,7 @@ public class Player : MonoBehaviour
 
         Vector2 jumpVelocity = new Vector2(dirX, dirY) * _currentJumpForce;
 
-        IsJumping = true;
+        _isJumping = true;
 
         _rigidBody.linearVelocity = Vector2.zero;
         _rigidBody.linearVelocity = jumpVelocity;
@@ -198,19 +213,45 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") == false)
+
+        if (_isJumping)
         {
-            return;
+            Vector2 normal = collision.contacts[0].normal;
+
+            bool isWall = Mathf.Abs(normal.x) > Mathf.Abs(normal.y);
+
+            if (isWall)
+            {
+                BounceOffWall(normal);
+            }
+
+        }
+    }
+
+    private void BounceOffWall(Vector2 normal)
+    {
+        _isJumping = true;
+        _isWallBouncing = true;
+
+        float bounceX = normal.x * (_minJumpForce * 0.7f);
+        float bounceY = _minJumpForce * 0.6f;
+
+        _rigidBody.linearVelocity = new Vector2(bounceX, bounceY);
+        _currentJumpForce = _minJumpForce;
+
+        bool shouldLookRight = normal.x > 0;
+        if (_lookRight != shouldLookRight)
+        {
+            Flip();
         }
 
-        var enemyComponent = collision.gameObject.GetComponent<DaniTech_2DEnemy>();
-        if (enemyComponent == null)
-        {
-            Debug.Log($"충돌한 적 객체에서 컴포넌트를 찾을 수 없습니다 : {gameObject.name}");
-            return;
-        }
+        Invoke(nameof(ResetWallBouncing), 0.15f);
+        CancelInvoke(nameof(ResetWallBouncing));
+    }
 
-        DaniTechGameObjectManager.Inst.RequestDestroyEntityObject(enemyComponent.EntityInstancId);
+    private void ResetWallBouncing()
+    {
+        _isWallBouncing = false;
     }
     private void OnDrawGizmos()
     {

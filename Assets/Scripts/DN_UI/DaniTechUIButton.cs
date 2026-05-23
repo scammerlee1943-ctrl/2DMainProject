@@ -110,7 +110,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
             Image_Select.gameObject.SetActive(!currentActive);
         }
         PlayClickAnimation();
-
+        PlayClickSound();
     }
 
     private void PlayClickAnimation()
@@ -131,13 +131,29 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void PlayHoverSound()
     {
+        int randomIndex = UnityEngine.Random.Range(1, 3);
+        string randomKey = $"SFX_UI_Hover_{randomIndex}";
+
+        PlayButtonSound(randomKey);
+    }
+
+    private void PlayClickSound()
+    {
+        int randomIndex = UnityEngine.Random.Range(1, 8);
+        string randomKey = $"SFX_UI_Click_{randomIndex}";
+
+        PlayButtonSound(randomKey);
+    }
+
+    private void PlayButtonSound(string soundKey)
+    {
         if (DaniTechSoundManager.Inst != null)
         {
-            // 1부터 2까지 랜덤 (Range의 맥스값은 미포함이므로 3으로 지정)
-            int randomIndex = UnityEngine.Random.Range(1, 3);
-            string randomKey = $"SFX_UI_Hover_{randomIndex}";
-
-            DaniTechSoundManager.Inst.PlaySFX(randomKey);
+            DaniTechSoundManager.Inst.PlaySFX(soundKey);
+        }
+        else
+        {
+            Debug.LogWarning("사운드 매니저를 찾을 수 없습니다!!");
         }
     }
 

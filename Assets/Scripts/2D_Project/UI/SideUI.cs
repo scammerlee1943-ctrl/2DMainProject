@@ -14,46 +14,44 @@ public class SideUI : DaniTechUIBase
         Btn_OpenMusic?.BindOnClickButtonEvent(OnClick_OpenMusic);
         Btn_OpenSoundVolume?.BindOnClickButtonEvent(OnClick_OpenSoundVolume);
         Btn_OpenSave?.BindOnClickButtonEvent(OnClick_OpenSave);
-
-        Btn_OpenSetting?.BindOnHoverButtonEvent(OnHover_RandomSideButton);
-        Btn_OpenMusic?.BindOnHoverButtonEvent(OnHover_RandomSideButton);
-        Btn_OpenSoundVolume?.BindOnHoverButtonEvent(OnHover_RandomSideButton);
-        Btn_OpenSave?.BindOnHoverButtonEvent(OnHover_RandomSideButton);
     }
-    private void OnHover_RandomSideButton()
+    private void OnDisable()
     {
-        int randomIndex = Random.Range(1, 3);
-
-        string randomKey = $"SFX_UI_Hover_{randomIndex}";
-
-        if (DaniTechSoundManager.Inst != null)
-        {
-            DaniTechSoundManager.Inst.PlaySFX(randomKey);
-        }
-        else
-        {
-            Debug.LogWarning("사운드 매니저를 찾을 수 없습니다!!");
-        }
+        Btn_OpenSetting?.UnBindOnClickButtonEvent(OnClick_OpenSetting);
+        Btn_OpenMusic?.UnBindOnClickButtonEvent(OnClick_OpenMusic);
+        Btn_OpenSoundVolume?.UnBindOnClickButtonEvent(OnClick_OpenSoundVolume);
+        Btn_OpenSave?.UnBindOnClickButtonEvent(OnClick_OpenSave);
     }
     public void OnClick_OpenSetting()
     {
-        //DaniTechSoundManager.Inst.PlaySFX();
-        DaniTechUIManager.Instance.OpenSetting();
+        if (DaniTechUIManager.Instance != null)
+        {
+            DaniTechUIManager.Instance.OpenSetting();
+        }
     }
 
     public void OnClick_OpenMusic()
     {
-        DaniTechUIManager.Instance.OpenMusicVolume();
+        if (DaniTechUIManager.Instance != null)
+        {
+            DaniTechUIManager.Instance.OpenMusicVolume();
+        }
     }
 
     public void OnClick_OpenSoundVolume()
     {
-        DaniTechUIManager.Instance.OpenSound();
+        if (DaniTechUIManager.Instance != null)
+        {
+            DaniTechUIManager.Instance.OpenSound();
+        }
     }
 
     public void OnClick_OpenSave()
     {
-        DaniTechUIManager.Instance.OpenSave();
+        if (DaniTechUIManager.Instance != null)
+        {
+            DaniTechUIManager.Instance.OpenSave();
+        }
     }
 }
 

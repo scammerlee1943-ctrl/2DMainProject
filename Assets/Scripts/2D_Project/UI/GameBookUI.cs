@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Unity.Android.Gradle.Manifest;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;

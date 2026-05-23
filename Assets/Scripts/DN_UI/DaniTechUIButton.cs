@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -10,6 +11,8 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private Text Text_Base;
     [SerializeField] private Image Image_Base;
     [SerializeField] private Image Image_Select;
+
+    private Action OnHoverButtonEvent;
 
     private void Awake()
     {
@@ -25,18 +28,32 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void OnDisable()
     {
-        Button_Base.onClick.RemoveAllListeners();
+        if (Button_Base != null)
+        {
+            Button_Base.onClick.RemoveListener(new UnityAction(OnClickSetSelectUI));
+        }
+        OnHoverButtonEvent = null;
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         PlayHoverAnimation();
+        PlayHoverSound();
+        OnHoverButtonEvent?.Invoke();
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         PlayUnHoverAnimation();
     }
 
+    public void BindOnHoverButtonEvent(Action onHoverCallback)
+    {
+        OnHoverButtonEvent += onHoverCallback;
+    }
+    public void UnBindOnHoverButtonEvent(Action onHoverCallback)
+    {
+        OnHoverButtonEvent -= onHoverCallback;
+    }
 
     private void SetDefaultUI()
     {
@@ -66,7 +83,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if(Button_Base == null) return;
 
-        Button_Base.onClick.AddListener(new UnityEngine.Events.UnityAction(onClickCallback));
+        Button_Base.onClick.AddListener(new UnityAction(onClickCallback));
 
     }
 
@@ -74,7 +91,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (Button_Base == null) return;
 
-        Button_Base.onClick.RemoveListener(new UnityEngine.Events.UnityAction(onClickCallback));
+        Button_Base.onClick.RemoveListener(new UnityAction(onClickCallback));
     }
 
     public void ChangeButtonText(string buttonStr)
@@ -110,6 +127,18 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
         sequence.Append(transform.DOScaleX(1f, 0.2f).SetEase(Ease.OutBack));
         sequence.Join(transform.DOScaleY(1f, 0.2f).SetEase(Ease.OutBack));
         sequence.Join(transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack));
+    }
+
+    private void PlayHoverSound()
+    {
+        if (DaniTechSoundManager.Inst != null)
+        {
+            // 1부터 2까지 랜덤 (Range의 맥스값은 미포함이므로 3으로 지정)
+            int randomIndex = UnityEngine.Random.Range(1, 3);
+            string randomKey = $"SFX_UI_Hover_{randomIndex}";
+
+            DaniTechSoundManager.Inst.PlaySFX(randomKey);
+        }
     }
 
     private void PlayHoverAnimation()

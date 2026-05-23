@@ -15,6 +15,21 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 80e8e0aaab7e37b4084b72f287df5f5d
   m_SerializeEntries:
+  - m_GUID: 1837ea3c8c107844cb6f269459f93735
+    m_Address: SFX_Btn_Hover_3
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1c3b15e9ea28396478d6a10a0bd92e99
+    m_Address: SFX_UI_Hover_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 20f633ee2516b4e479dbcad19edc5b8e
+    m_Address: SFX_Btn_Hover_4
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 30219fa9f04704b4fb027744682e4775
     m_Address: Icon/Icon_Item_Letter_1
     m_ReadOnly: 0
@@ -22,6 +37,16 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 378e96d44d6a3624a8cb20d641a660e2
     m_Address: 2DPrefab/DropItem_Letter
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 484a3a8b1b5e3d544b604a833b8fd554
+    m_Address: SFX_Btn_Hover_8
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 53b50ce9443fbf74d808cb2521235e2f
+    m_Address: SFX_Btn_Hover_7
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -40,8 +65,33 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6d6e0f28d2a25f845b8a2ebdc6dd3d0a
+    m_Address: SFX_Btn_Hover_6
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 8e862a003190fef49b3b5cc675422ad3
+    m_Address: SFX_Btn_Hover_2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 95e494793b73d1f4d9a3d4fb7fe6509c
+    m_Address: SFX_Btn_Hover_5
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: add7a90d13ebb1f49a7cf5b86f6c0d9c
+    m_Address: SFX_UI_Hover_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e658f8d04f8862a45b81a8f53ab9bbf6
     m_Address: 2DPrefab/DropItem_Coin
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ea66366044543e94aa1bce061b1ea9a3
+    m_Address: SFX_Btn_Hover_1
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

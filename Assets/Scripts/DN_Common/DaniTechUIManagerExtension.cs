@@ -21,6 +21,7 @@ public enum DaniTechUIType
     DNDialogueUI,
     DNInfoBookUI,
     GameBookUI,
+    MusicSelectUI,
     MenuUI,
     SideUI,
     SettingUI,
@@ -113,7 +114,7 @@ public static class DaniTechUIManagerExtension
     }
     public static void OpenMusicVolume(this DaniTechUIManager uiManger)
     {
-        var uiBase = uiManger.OpenContentUI(DaniTechUIType.MusicUI);
+        var uiBase = uiManger.OpenContentUI(DaniTechUIType.MusicSelectUI);
         if (uiBase == null)
         {
             Debug.LogWarning($"UI가 생성되지 않았습니다");

@@ -1,20 +1,20 @@
-﻿using DG.Tweening.Core.Easing;
-using System;
+﻿using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     [Header("이동 설정")]
-    [SerializeField] private float _moveSpeed = 8f;
+    [SerializeField] private float _moveSpeed = 4f;
+    [SerializeField] private float _jumpHorizontalForce = 10f;
 
     [Header("점프 설정")]
-    [SerializeField] private float _minJumpForce = 5f;
-    [SerializeField] private float _maxJumpForce = 20f;
-    [SerializeField] private float _chargeSpeed = 30f;
+    [SerializeField] private float _minJumpForce = 3f;
+    [SerializeField] private float _maxJumpForce = 12f;
+    [SerializeField] private float _chargeSpeed = 15f;
 
-    [Header("점프 각도 설정")]
-    [Range(15f, 75f)][SerializeField] private float _jumpAngle = 35f;
+    [Header("물리 설정")]
+    [SerializeField] private float _terminalVelocity = 20f;
 
     [Header("차징 흔들림 설정")]
     [SerializeField] private Transform Transform_Visual;
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
     private bool _isWallBouncing = false;
 
     private Vector3 _originVisualLocalPos;
-
+    private Vector2 _previousVelocity;
 
 
     private void Awake()
@@ -62,6 +62,11 @@ public class Player : MonoBehaviour
     {
         _isGrounded = Physics2D.OverlapCircle(Transform_GroundCheck.position, _checkRadius, LayerMask_Ground);
 
+        if (_rigidBody.linearVelocity.y < -_terminalVelocity)
+        {
+            _rigidBody.linearVelocity = new Vector2(_rigidBody.linearVelocity.x, -_terminalVelocity);
+        }
+
         if (_isGrounded && _rigidBody.linearVelocity.y <= 0.01f)
         {
             if (_isWallBouncing)
@@ -69,25 +74,20 @@ public class Player : MonoBehaviour
                 _isWallBouncing = false;
                 CancelInvoke(nameof(ResetWallBouncing));
             }
+
             if (_isJumping)
             {
-                _currentJumpForce = _minJumpForce;
+                _currentJumpForce = 0f;
             }
             _isJumping = false;
         }
 
+        _previousVelocity = _rigidBody.linearVelocity;
         Move();
     }
     private void HandleMoveInput()
     {
-        if (_isCharging == false)
-        {
-            _horizontalInput = Input.GetAxisRaw("Horizontal");
-        }
-        else
-        {
-            _horizontalInput = 0f;
-        }
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
     private void HandleJumpInput()
@@ -95,7 +95,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
         {
             _isCharging = true;
-            GetJumpDirection();
+            _currentJumpForce = 0f;
             _rigidBody.linearVelocity = new Vector2(0f, _rigidBody.linearVelocity.y);
         }
 
@@ -114,6 +114,7 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Space) && _isCharging)
         {
+            GetJumpDirection();
             Jump();
         }
     }
@@ -123,10 +124,12 @@ public class Player : MonoBehaviour
         {
             _jumpDirection = 0f;
         }
+
         else if (_lookRight)
         {
             _jumpDirection = 1f;
         }
+
         else
         {
             _jumpDirection = -1f;
@@ -139,6 +142,7 @@ public class Player : MonoBehaviour
         {
             Flip();
         }
+
         else if (_horizontalInput < 0 && _lookRight)
         {
             Flip();
@@ -175,22 +179,14 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        float radian = _jumpAngle * Mathf.Deg2Rad;
-        float dirX = Mathf.Cos(radian) * _jumpDirection;
-        float dirY = Mathf.Sin(radian);
-
-        Vector2 jumpVelocity = new Vector2(dirX, dirY) * _currentJumpForce;
+        float horizontalForce = (_jumpDirection != 0) ? _jumpHorizontalForce : 0f;
+        _rigidBody.linearVelocity = new Vector2(horizontalForce * _jumpDirection, _currentJumpForce);
 
         _isJumping = true;
-
-        _rigidBody.linearVelocity = Vector2.zero;
-        _rigidBody.linearVelocity = jumpVelocity;
+        _isCharging = false;
 
         ChangePlayerState(EntityAnimState.Jump);
-
         Transform_Visual.localPosition = _originVisualLocalPos;
-
-        _isCharging = false;
     }
     private void ShakeVisual()
     {
@@ -219,34 +215,32 @@ public class Player : MonoBehaviour
             Vector2 normal = collision.contacts[0].normal;
 
             bool isWall = Mathf.Abs(normal.x) > Mathf.Abs(normal.y);
+            bool isCeiling = normal.y < -0.5f;
 
             if (isWall)
             {
                 BounceOffWall(normal);
             }
 
+            else if (isCeiling)
+            {
+                _rigidBody.linearVelocity = new Vector2(_rigidBody.linearVelocity.x,-_rigidBody.linearVelocity.y / 2f);
+            }
         }
     }
 
     private void BounceOffWall(Vector2 normal)
     {
-        _isJumping = true;
         _isWallBouncing = true;
-
-        float bounceX = normal.x * (_minJumpForce * 0.7f);
-        float bounceY = _minJumpForce * 0.6f;
-
-        _rigidBody.linearVelocity = new Vector2(bounceX, bounceY);
+        _rigidBody.linearVelocity = new Vector2(-_previousVelocity.x / 2f, _previousVelocity.y);
         _currentJumpForce = _minJumpForce;
 
         bool shouldLookRight = normal.x > 0;
-        if (_lookRight != shouldLookRight)
-        {
-            Flip();
-        }
 
-        Invoke(nameof(ResetWallBouncing), 0.15f);
+        if (_lookRight != shouldLookRight) Flip();
+
         CancelInvoke(nameof(ResetWallBouncing));
+        Invoke(nameof(ResetWallBouncing), 0.15f);
     }
 
     private void ResetWallBouncing()

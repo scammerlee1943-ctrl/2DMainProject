@@ -8,7 +8,9 @@ public enum EntityAnimState
     Walk,
     Run,
     Jump,
-    Charge
+    Stun,
+    Charge,
+    Fallen
 
 }
 
@@ -64,6 +66,13 @@ public class EntityAnimatorController : MonoBehaviour
             case EntityAnimState.Charge:
                 Animator_Entity.SetBool("IsCharge", true);
                 break;
+            case EntityAnimState.Stun:
+                Animator_Entity.SetBool("IsStun", true);
+                break;
+            case EntityAnimState.Fallen:
+                Debug.Log("Fallen 상태 진입!");
+                Animator_Entity.SetBool("IsFallen", true);
+                break;
             default:
                 break;
         }
@@ -75,5 +84,7 @@ public class EntityAnimatorController : MonoBehaviour
         Animator_Entity.SetBool("IsRun", false);
         Animator_Entity.SetBool("IsJump", false);
         Animator_Entity.SetBool("IsCharge", false);
+        Animator_Entity.SetBool("IsStun", false);
+        Animator_Entity.SetBool("IsFallen", false);
     }
 }

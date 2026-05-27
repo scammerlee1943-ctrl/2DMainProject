@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEditor.Experimental;
 
 [System.Serializable]
 public class GameDataBase
@@ -91,4 +92,15 @@ public class DNMonsterData : GameDataBase
     public string Description;
     public string IconPath;
     public string PrefabPath;
+}
+[System.Serializable]
+public class ArtifactData : GameDataBase
+{
+    public string Name;
+    public string Description;
+    public string ItemType;
+    public string Grade;
+    public string MaxStackCount;
+    public string SellingPrice;
+    public string IconPath;
 }

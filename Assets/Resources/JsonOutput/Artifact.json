@@ -1,0 +1,12 @@
+[
+  {
+    "Id": "Artifact_SavePoint_1",
+    "Name": "저장의 증표",
+    "Description": "중요한 순간 저장해 한 번 사용할 수 있다.",
+    "ItemType": "Normal",
+    "Grade": "Legend",
+    "MaxStackCount": 2,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Artifact_SavePoint_1"
+  }
+]

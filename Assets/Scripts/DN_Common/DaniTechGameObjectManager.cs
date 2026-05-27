@@ -21,7 +21,17 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         Inst = this;
     }
+    private Player _localPlayer;
 
+    public void RegisterLocalPlayer(Player player)
+    {
+        _localPlayer = player;
+    }
+
+    public Player GetLocalPlayer()
+    {
+        return _localPlayer;
+    }
     public void RequestSpawnEnemy()
     {
         if(Prefab_Enemy == null)

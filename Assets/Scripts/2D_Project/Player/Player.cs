@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float _fallThreshold = 3f;
 
     public event Action<EntityAnimState> OnStateChanged;
+    public event Action<float, float> OnHeightChanged;
 
     private Rigidbody2D _rigidBody;
     private float _horizontalInput;
@@ -51,6 +52,16 @@ public class Player : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody2D>();
         _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         _originVisualLocalPos = Transform_Visual.localPosition;
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
+
+        var hudUI = DaniTechUIManager.Instance.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
+        if (hudUI is HudUI hud)
+        {
+            OnHeightChanged += hud.UpdateHeight;
+        }
+    }
+    private void Start()
+    {
     }
 
     private void Update()
@@ -78,6 +89,8 @@ public class Player : MonoBehaviour
             _maxJumpY = transform.position.y;
         }
 
+        OnHeightChanged?.Invoke(transform.position.y, _maxJumpY);
+
         // 착지 처리
         if (_isGrounded && _rigidBody.linearVelocity.y <= 0.01f)
         {
@@ -87,10 +100,10 @@ public class Player : MonoBehaviour
             {
                 _currentJumpForce = 0f;
                 float fallDistance = _maxJumpY - transform.position.y;
-                Debug.Log($"fallDistance: {fallDistance}, threshold: {_fallThreshold}");
                 if (fallDistance > _fallThreshold)
                 {
                     _isFallen = true;
+                    DaniTechSoundManager.Inst.PlaySFX("sfx_fallen", 0.15f);
                     ChangePlayerState(EntityAnimState.Fallen);
                 }
             }
@@ -103,6 +116,7 @@ public class Player : MonoBehaviour
 
     private void HandleMoveInput()
     {
+        _horizontalInput = Input.GetAxisRaw("Horizontal");
         // 벽에 부딪혀 낙하 중이면 이동 입력 차단
         if (_isFallingFromWall)
         {
@@ -112,7 +126,7 @@ public class Player : MonoBehaviour
 
         if (_isFallen)
         {
-            if (Input.GetAxisRaw("Horizontal") != 0)
+            if (_horizontalInput != 0)
             {
                 _isFallen = false;
                 ChangePlayerState(EntityAnimState.Idle);
@@ -120,7 +134,6 @@ public class Player : MonoBehaviour
             _horizontalInput = 0f;
             return;
         }
-        _horizontalInput = Input.GetAxisRaw("Horizontal");
     }
 
     private void HandleJumpInput()
@@ -212,13 +225,24 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         // 수직은 충전량, 수평은 고정값
-        float horizontalForce = (_jumpDirection != 0) ? _jumpHorizontalForce : 0f;
+        float horizontalForce;
+
+        if (_jumpDirection != 0)
+        {
+            horizontalForce = _jumpHorizontalForce;
+        }
+
+        else
+        {
+            horizontalForce = 0f;
+        }
+
         _rigidBody.linearVelocity = new Vector2(horizontalForce * _jumpDirection, _currentJumpForce);
 
-        _maxJumpY = transform.position.y; // 최고 높이 초기화
         _isJumping = true;
         _isCharging = false;
 
+        DaniTechSoundManager.Inst.PlaySFX("sfx_jump", 0.4f);
         ChangePlayerState(EntityAnimState.Jump);
         Transform_Visual.localPosition = _originVisualLocalPos;
     }

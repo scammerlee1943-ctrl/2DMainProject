@@ -19,6 +19,7 @@ public static class DaniTechGameUtil
         DaniTechGameDataManager.Instance.LoadWeaponData("Weapon");
         DaniTechGameDataManager.Instance.LoadCostumeData("Costume");
         DaniTechGameDataManager.Instance.LoadDNItemData("DNItem");
+        DaniTechGameDataManager.Instance.LoadArtifactData("Artifact");
         DaniTechGameDataManager.Instance.LoadDNDialogueData();
         DaniTechGameDataManager.Instance.LoadAll();
     }
@@ -56,7 +57,7 @@ public static class DaniTechGameUtil
         return sprite;
     }
 
-    public static async UniTaskVoid LoadAndPlayAudioClip(AudioSource audioSource, string audioPath, bool isLoop = false)
+    public static async UniTaskVoid LoadAndPlayAudioClip(AudioSource audioSource, string audioPath, bool isLoop = false, float volume = 1f)
     {
         AudioClip clip = await DaniTechResourceManager.Inst.LoadAsset<AudioClip>(audioPath);
         if (clip == null)
@@ -65,6 +66,7 @@ public static class DaniTechGameUtil
             return;
         }
 
+        audioSource.volume = volume;
         if(isLoop == true)
         {
             audioSource.clip = clip;

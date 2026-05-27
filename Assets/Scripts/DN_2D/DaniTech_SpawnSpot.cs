@@ -6,7 +6,8 @@ public enum DNSpawnSpotType
     Harvest,
     DropItem,
     Dialogue,
-    Monster
+    Monster,
+    TreasureBox
 }
 
 public enum DNStartSpawnType
@@ -15,6 +16,7 @@ public enum DNStartSpawnType
     OnAwake,
     OnEnable,
     OnRange,
+    OnInteract
     // UniTask나 코루틴으로 일정 시간마다 랜덤 생성도 구현해보자
 }
 
@@ -22,9 +24,11 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 {
     [SerializeField] private DNSpawnSpotType _spawnSpotType;
     [SerializeField] private DNStartSpawnType _startSpawnType;
-
     [SerializeField] private string _spawnObjectDataId;
     [SerializeField] private Collider2D Collider_OnSpawnStart;
+    [SerializeField] private Animator Animator_Box;
+
+    private bool _isPlayerInRange = false;
 
     private void Awake()
     {
@@ -44,17 +48,39 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 
         if (Collider_OnSpawnStart != null)
         {
-            Collider_OnSpawnStart.enabled = (_startSpawnType == DNStartSpawnType.OnRange);
+            Collider_OnSpawnStart.enabled = (_startSpawnType == DNStartSpawnType.OnRange || _startSpawnType == DNStartSpawnType.OnInteract);
+        }
+    }
+    private void Update()
+    {
+        if (_isPlayerInRange == true && Input.GetKeyDown(KeyCode.E))
+        {
+            StartSpawn();
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.CompareTag("Player") == true)
+        if (collision.CompareTag("Player") == true)
         {
-            StartSpawn();
+            if (_startSpawnType == DNStartSpawnType.OnRange)
+            {
+                StartSpawn();
+            }
+            else if (_startSpawnType == DNStartSpawnType.OnInteract)
+            {
+                _isPlayerInRange = true;
+            }
         }
     }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player") == true)
+        {
+            _isPlayerInRange = false;
+        }
+    }
+
 
     private void StartSpawn()
     {
@@ -69,6 +95,12 @@ public class DaniTech_SpawnSpot : MonoBehaviour
                 // 추가처리가 들어가기 까지는 해당 스폰스팟이 더이상 동작하지 않게 비활성화 한다
                 this.gameObject.SetActive(false);
                 break;
+            case DNSpawnSpotType.TreasureBox:
+                var fieldObjectData = DaniTechGameDataManager.Instance.GetDNFieldObjectData(_spawnObjectDataId);
+                if (fieldObjectData == null) break;
+                Animator_Box.SetBool("IsOpen", true);
+                DaniTechGameManager.Inst.AddItem(fieldObjectData.DropItemDataId, 1);
+                break;
             case DNSpawnSpotType.Monster:
                 break;
             case DNSpawnSpotType.Dialogue:
@@ -77,6 +109,10 @@ public class DaniTech_SpawnSpot : MonoBehaviour
                 this.gameObject.SetActive(false);
                 break;
         }
+    }
+    public void HideBox()
+    {
+        this.gameObject.SetActive(false);
     }
 
 }

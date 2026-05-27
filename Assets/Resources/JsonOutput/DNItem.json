@@ -22,7 +22,7 @@
   {
     "Id": "Item_Letter_1",
     "Name": "오래된 편지",
-    "Description": "뭐라고 적혀있다.",
+    "Description": "알 수 없는 글씨로 적혀있다.",
     "ItemType": "Normal",
     "Grade": "Epic",
     "MaxStackCount": 5,

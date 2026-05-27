@@ -75,6 +75,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a73c7ba24ae4c14b93cee538f72bc48
+    m_Address: sfx_jump
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: add7a90d13ebb1f49a7cf5b86f6c0d9c
     m_Address: SFX_UI_Hover_1
     m_ReadOnly: 0
@@ -87,6 +92,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: ea66366044543e94aa1bce061b1ea9a3
     m_Address: SFX_UI_Click_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f213c597493f9fd46922968f9cfa7c89
+    m_Address: sfx_fallen
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

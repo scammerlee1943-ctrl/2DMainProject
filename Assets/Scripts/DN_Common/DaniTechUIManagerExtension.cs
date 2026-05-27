@@ -29,7 +29,8 @@ public enum DaniTechUIType
     SoundVolumeUI,
     SaveUI,
     PauseUI,
-    LobbyUI
+    LobbyUI,
+    HudUI
 }
 
 public static class DaniTechUIManagerExtension
@@ -47,6 +48,7 @@ public static class DaniTechUIManagerExtension
     public static void ShowStartupUIOnGameStart(this DaniTechUIManager uiManager)
     {
         //uiManager.OpenLoadingUI();
+        uiManager.OpenUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
         uiManager.OpenContentUI(DaniTechUIType.LobbyUI);
         // 게임 로비 UI를 여기서 오픈해주자 -> uiManager.
         // MainUI도
@@ -176,6 +178,30 @@ public static class DaniTechUIManagerExtension
         if (uiBase is DaniTech_DialogueUI dialogueUi)
         {
             dialogueUi.StartDialogue(startDialogueId);
+        }
+    }
+
+    public static void AddHudSlot(this DaniTechUIManager uiManager, int instanceId)
+    {
+        var uiBase = uiManager.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
+        if (uiBase == null) return;
+
+        //기존에 GetComponent를 하던 부분이 클래스 형변환을 해도 되도록 개선되었다(UIBase를 상속받기 때문에 가능)
+        if(uiBase is HudUI hudui)
+        {
+            hudui.AddHudSlot(instanceId);
+        }
+    }
+
+    public static void RemoveHudSlot(this DaniTechUIManager uiManager)
+    {
+        var uiBase = uiManager.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
+        if (uiBase == null) return;
+
+        //기존에 GetComponent를 하던 부분이 클래스 형변환을 해도 되도록 개선되었다(UIBase를 상속받기 때문에 가능)
+        if (uiBase is HudUI hudui)
+        {
+            hudui.RemoveHudSlot();
         }
     }
 }

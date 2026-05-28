@@ -6,7 +6,8 @@ public class Player : MonoBehaviour
 {
     [Header("이동 설정")]
     [SerializeField] private float _moveSpeed = 4f;
-    [SerializeField] private float _jumpHorizontalForce = 10f;
+    [SerializeField] private float _minJumpHorizontalForce = 5f;
+    [SerializeField] private float _maxJumpHorizontalForce = 25f;
 
     [Header("점프 설정")]
     [SerializeField] private float _minJumpForce = 3f;
@@ -29,11 +30,13 @@ public class Player : MonoBehaviour
 
     public event Action<EntityAnimState> OnStateChanged;
     public event Action<float, float> OnHeightChanged;
+    public event Action<bool, bool, bool> OnInputChanged;
 
     private Rigidbody2D _rigidBody;
     private float _horizontalInput;
     private float _currentJumpForce = 0f;
     private float _jumpDirection;
+    private float _maxJumpY;
 
     private bool _isGrounded;
     private bool _lookRight = true;
@@ -41,7 +44,9 @@ public class Player : MonoBehaviour
     private bool _isJumping;
     private bool _isFallingFromWall = false;
     private bool _isFallen = false;
-    private float _maxJumpY;
+    private bool _prevIsLeft;
+    private bool _prevIsRight;
+    private bool _prevIsCharging;
 
     private Vector3 _originVisualLocalPos;
     private Vector2 _previousVelocity;
@@ -124,7 +129,7 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (_isFallen)
+        if (_isFallen == true)
         {
             if (_horizontalInput != 0)
             {
@@ -133,6 +138,16 @@ public class Player : MonoBehaviour
             }
             _horizontalInput = 0f;
             return;
+        }
+        bool isLeft = _horizontalInput < 0;
+        bool isRight = _horizontalInput > 0;
+
+        if (isLeft != _prevIsLeft || isRight != _prevIsRight || _isCharging != _prevIsCharging)
+        {
+            _prevIsLeft = isLeft;
+            _prevIsRight = isRight;
+            _prevIsCharging = _isCharging;
+            OnInputChanged?.Invoke(isLeft, isRight, _isCharging);
         }
     }
 
@@ -143,6 +158,7 @@ public class Player : MonoBehaviour
         {
             _isFallen = false;
             _isCharging = true;
+            OnInputChanged?.Invoke(_horizontalInput < 0, _horizontalInput > 0, _isCharging);
             _currentJumpForce = _minJumpForce;
             _rigidBody.linearVelocity = new Vector2(0f, _rigidBody.linearVelocity.y);
         }
@@ -166,6 +182,7 @@ public class Player : MonoBehaviour
         {
             GetJumpDirection();
             Jump();
+            OnInputChanged?.Invoke(_horizontalInput < 0, _horizontalInput > 0, false);
         }
     }
     private void GetJumpDirection()
@@ -224,12 +241,13 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        // 수직은 충전량, 수평은 고정값
-        float horizontalForce;
+        float chargeRatio = (_currentJumpForce - _minJumpForce) / (_maxJumpForce - _minJumpForce);
+        float horizontalForce = 0f;
+
 
         if (_jumpDirection != 0)
         {
-            horizontalForce = _jumpHorizontalForce;
+            horizontalForce = Mathf.Lerp(_minJumpHorizontalForce, _maxJumpHorizontalForce, chargeRatio);
         }
 
         else

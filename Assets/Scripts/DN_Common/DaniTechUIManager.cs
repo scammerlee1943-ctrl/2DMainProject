@@ -50,6 +50,12 @@ public class DaniTechUIManager : MonoBehaviour
         if (_openedUIDic.Contains(uiType))
         {
             var openedUi = _createdUIDic[uiType];
+            if (openedUi == null) // 추가
+            {
+                _openedUIDic.Remove(uiType);
+                _createdUIDic.Remove(uiType);
+                return;
+            }
             openedUi.gameObject.SetActive(false);
             _openedUIDic.Remove(uiType);
         }

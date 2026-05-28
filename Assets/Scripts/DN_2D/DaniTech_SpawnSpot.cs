@@ -6,8 +6,10 @@ public enum DNSpawnSpotType
     Harvest,
     DropItem,
     Dialogue,
+    NPCDialogue,
     Monster,
-    TreasureBox
+    TreasureBox,
+    Tutorial
 }
 
 public enum DNStartSpawnType
@@ -25,9 +27,11 @@ public class DaniTech_SpawnSpot : MonoBehaviour
     [SerializeField] private DNSpawnSpotType _spawnSpotType;
     [SerializeField] private DNStartSpawnType _startSpawnType;
     [SerializeField] private string _spawnObjectDataId;
+    [SerializeField] private string _lastDialogueId;
     [SerializeField] private Collider2D Collider_OnSpawnStart;
     [SerializeField] private Animator Animator_Box;
 
+    private bool _hasSpokenBefore = false;
     private bool _isPlayerInRange = false;
 
     private void Awake()
@@ -65,7 +69,14 @@ public class DaniTech_SpawnSpot : MonoBehaviour
         {
             if (_startSpawnType == DNStartSpawnType.OnRange)
             {
-                StartSpawn();
+                if (_spawnSpotType == DNSpawnSpotType.Tutorial)
+                {
+                    DaniTechUIManager.Instance.ShowInteractUI();
+                }
+                else
+                {
+                    StartSpawn();
+                }
             }
             else if (_startSpawnType == DNStartSpawnType.OnInteract)
             {
@@ -78,6 +89,11 @@ public class DaniTech_SpawnSpot : MonoBehaviour
         if (collision.CompareTag("Player") == true)
         {
             _isPlayerInRange = false;
+
+            if (_spawnSpotType == DNSpawnSpotType.Tutorial)
+            {
+                DaniTechUIManager.Instance.HideInteractUI();
+            }
         }
     }
 
@@ -106,7 +122,18 @@ public class DaniTech_SpawnSpot : MonoBehaviour
             case DNSpawnSpotType.Dialogue:
                 // 다이얼로그 발생 유형은 시작 시 이 스폰스팟을 더이상 사용하지 않게 비활성화 한다 (제거도 무관)
                 DaniTechUIManager.Instance.OpenDialogueUI(_spawnObjectDataId);
-                this.gameObject.SetActive(false);
+                //this.gameObject.SetActive(false);
+                break;
+            case DNSpawnSpotType.NPCDialogue:
+                if (_hasSpokenBefore == false)
+                {
+                    DaniTechUIManager.Instance.OpenDialogueUI(_spawnObjectDataId);
+                    _hasSpokenBefore = true;
+                }
+                else
+                {
+                    DaniTechUIManager.Instance.OpenDialogueUI(_lastDialogueId);
+                }
                 break;
         }
     }

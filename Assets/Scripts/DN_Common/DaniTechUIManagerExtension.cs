@@ -30,7 +30,8 @@ public enum DaniTechUIType
     SaveUI,
     PauseUI,
     LobbyUI,
-    HudUI
+    HudUI,
+    InteractUI
 }
 
 public static class DaniTechUIManagerExtension
@@ -203,6 +204,16 @@ public static class DaniTechUIManagerExtension
         {
             hudui.RemoveHudSlot();
         }
+    }
+
+    public static void ShowInteractUI(this DaniTechUIManager uiManager)
+    {
+        uiManager.OpenUI(DaniTechUIRootType.MainUI, DaniTechUIType.InteractUI);
+    }
+
+    public static void HideInteractUI(this DaniTechUIManager uiManager)
+    {
+        uiManager.CloseUI(DaniTechUIRootType.MainUI, DaniTechUIType.InteractUI);
     }
 }
 

@@ -70,7 +70,6 @@ public class EntityAnimatorController : MonoBehaviour
                 Animator_Entity.SetBool("IsStun", true);
                 break;
             case EntityAnimState.Fallen:
-                Debug.Log("Fallen 상태 진입!");
                 Animator_Entity.SetBool("IsFallen", true);
                 break;
             default:

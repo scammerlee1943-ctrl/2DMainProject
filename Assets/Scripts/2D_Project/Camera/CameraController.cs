@@ -12,7 +12,6 @@ public class CameraController : MonoBehaviour
         _screenHeight = Camera.main.orthographicSize * 2f;
         _cameraY = transform.position.y;
     }
-
     private void Update()
     {
         float playerY = Transform_Player.position.y;

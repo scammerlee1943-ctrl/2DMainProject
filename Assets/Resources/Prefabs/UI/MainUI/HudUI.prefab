@@ -89,13 +89,6 @@ MonoBehaviour:
   Text_MaxHeight: {fileID: 3403106164498616794}
   Prefab_HudHeight: {fileID: 3264890633493078943, guid: ce53b3a5b5c6ab74a86f9de5075a49ce, type: 3}
   Transform_Root: {fileID: 0}
-  Layout_InteractUI: {fileID: 0}
-  Text_InputDescription: {fileID: 0}
-  Animator_AKey: {fileID: 0}
-  Animator_DKey: {fileID: 0}
-  Animator_LeftKey: {fileID: 0}
-  Animator_RightKey: {fileID: 0}
-  Animator_SpaceKey: {fileID: 0}
 --- !u!1001 &3852632484566272790
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,11 +159,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 863854224253818607, guid: ce53b3a5b5c6ab74a86f9de5075a49ce, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 863854224253818607, guid: ce53b3a5b5c6ab74a86f9de5075a49ce, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 863854224253818607, guid: ce53b3a5b5c6ab74a86f9de5075a49ce, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

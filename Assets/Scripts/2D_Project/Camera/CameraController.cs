@@ -30,4 +30,22 @@ public class CameraController : MonoBehaviour
             transform.position = new Vector3(transform.position.x, _cameraY, transform.position.z);
         }
     }
+    private void OnDrawGizmos()
+    {
+        float startY = transform.position.y;
+        float screenH = Camera.main.orthographicSize * 2f;
+        float screenW = screenH * Camera.main.aspect;
+
+        int previewCount = 10;
+
+        for (int i = 0; i < previewCount; i++)
+        {
+            float sectionY = startY + (screenH * i);
+            Gizmos.color = (i % 2 == 0) ? new Color(1f, 1f, 0f, 0.3f) : new Color(0f, 1f, 1f, 0.3f);
+            Gizmos.DrawWireCube(
+                new Vector3(transform.position.x, sectionY, 0f),
+                new Vector3(screenW, screenH, 0f)
+            );
+        }
+    }
 }

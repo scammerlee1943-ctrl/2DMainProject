@@ -2,17 +2,17 @@
   {
     "Id": "dialogue_mainstream_1_1_100",
     "CharacterDataId": null,
-    "Description": "새로운 세계에 접속 하셨습니다…<np>오랜시간 기다리셨는데..<np>제가 많이 늦었군요...",
+    "Description": "\"오, 여행자여! 마침 잘 와줬네...\"",
     "NextDialogueId": "dialogue_mainstream_1_1_200",
     "SelectionNameList": null,
     "SelectionDialogueIdList": null,
-    "TexturePath": "Texture2D/Texture2D_Loading_1",
+    "TexturePath": null,
     "VoicePath": null
   },
   {
     "Id": "dialogue_mainstream_1_1_200",
     "CharacterDataId": null,
-    "Description": "용사님이시어..고생하셨군요",
+    "Description": "\"실은 내가 키우던 고양이 두 마리가 글쎄, 저 위로 올라가더니 사라져버렸지 뭔가.\"",
     "NextDialogueId": "dialogue_mainstream_1_1_300",
     "SelectionNameList": null,
     "SelectionDialogueIdList": null,
@@ -22,53 +22,57 @@
   {
     "Id": "dialogue_mainstream_1_1_300",
     "CharacterDataId": null,
-    "Description": "다만 아직 야근이 남아 있습니다. 좀 더 고생해주세요.",
-    "NextDialogueId": null,
-    "SelectionNameList": null,
-    "SelectionDialogueIdList": null,
-    "TexturePath": null,
-    "VoicePath": "Sound/Voice_Pug_1_I_WantToEatPizza"
-  },
-  {
-    "Id": "dialogue_group_mainstream_1_2_100",
-    "CharacterDataId": null,
-    "Description": "두둥..지금.. 배가 고픕니다!",
-    "NextDialogueId": null,
-    "SelectionNameList": [
-      "아무 대답하지 않는다",
-      "대답한다"
-    ],
-    "SelectionDialogueIdList": [
-      "dialogue_mainstream_1_2_200",
-      "dialogue_mainstream_1_2_300"
-    ],
-    "TexturePath": null,
-    "VoicePath": null
-  },
-  {
-    "Id": "dialogue_group_mainstream_1_2_200",
-    "CharacterDataId": null,
-    "Description": "커피인가..",
-    "NextDialogueId": null,
+    "Description": "\"한 놈도 아니고 두 놈씩이나... 대체 위에 뭐가 있길래 그러는지 원.\"",
+    "NextDialogueId": "dialogue_mainstream_1_1_400",
     "SelectionNameList": null,
     "SelectionDialogueIdList": null,
     "TexturePath": null,
     "VoicePath": null
   },
   {
-    "Id": "dialogue_group_mainstream_1_2_300",
+    "Id": "dialogue_mainstream_1_1_400",
     "CharacterDataId": null,
-    "Description": "피자인가..",
+    "Description": "\"부탁이네. 저 위로 올라가서 우리 고양이 두 마리를 찾아와 주게나.\"",
+    "NextDialogueId": "dialogue_mainstream_1_1_500",
+    "SelectionNameList": null,
+    "SelectionDialogueIdList": null,
+    "TexturePath": null,
+    "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_1_500",
+    "CharacterDataId": null,
+    "Description": "\"이동은 AD(← →), 점프는 SPACE! 꾹 누를수록 높이 뛴다네. 자, 부탁하네!\"",
+    "NextDialogueId": "dialogue_mainstream_1_1_600",
+    "SelectionNameList": null,
+    "SelectionDialogueIdList": null,
+    "TexturePath": null,
+    "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_1_600",
+    "CharacterDataId": null,
+    "Description": "\"점프는 꾹 누를수록 높이 뛰는데, 몸이 떨리기 시작하면 그게 최대로 충전됐다는 신호일세!\"",
     "NextDialogueId": null,
     "SelectionNameList": null,
     "SelectionDialogueIdList": null,
     "TexturePath": null,
-    "VoicePath": "Sound/Voice_Pug_1_I_WantToEatPizza"
+    "VoicePath": null
   },
   {
-    "Id": "dialogue_group_mainstream_1_2_400",
+    "Id": "dialogue_mainstream_1_2_100",
     "CharacterDataId": null,
-    "Description": "일단 밥을 먹지 않고 조금 더 진행해본다!",
+    "Description": "\"아직 우리 고양이들 못 찾았나? 저 위에 있을 걸세.\" ",
+    "NextDialogueId": "dialogue_mainstream_1_2_200",
+    "SelectionNameList": null,
+    "SelectionDialogueIdList": null,
+    "TexturePath": null,
+    "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_2_200",
+    "CharacterDataId": null,
+    "Description": "\"조심히 다녀오게. 점프는 SPACE, 꾹 누르면 높이 뛴다네.\"",
     "NextDialogueId": null,
     "SelectionNameList": null,
     "SelectionDialogueIdList": null,

@@ -619,10 +619,10 @@ TextureImporter:
       name: UI_TravelBook_SpritesheetInfo01a_26
       rect:
         serializedVersion: 2
-        x: 73
-        y: 328
-        width: 14
-        height: 16
+        x: 67
+        y: 323
+        width: 26
+        height: 26
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -641,10 +641,10 @@ TextureImporter:
       name: UI_TravelBook_SpritesheetInfo01a_27
       rect:
         serializedVersion: 2
-        x: 105
-        y: 328
-        width: 14
-        height: 16
+        x: 96
+        y: 320
+        width: 32
+        height: 32
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -721,28 +721,6 @@ TextureImporter:
       bones: []
       spriteID: 9b2047a878779b64cb8806075393bfae
       internalID: -251531333
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: UI_TravelBook_SpritesheetInfo01a_31
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 260
-        width: 9
-        height: 6
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 720d269fccbf99946b5119421c2ae557
-      internalID: -1870677480
       vertices: []
       indices: 
       edges: []
@@ -2089,6 +2067,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: UI_TravelBook_SpritesheetInfo01a_90
+      rect:
+        serializedVersion: 2
+        x: 60
+        y: 252
+        width: 23
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60d3dd284f2aa384a86ad40d7e8f7973
+      internalID: -1279543681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -2195,6 +2195,7 @@ TextureImporter:
       UI_TravelBook_SpritesheetInfo01a_88: -1774557531
       UI_TravelBook_SpritesheetInfo01a_89: 1988726186
       UI_TravelBook_SpritesheetInfo01a_9: -97825916
+      UI_TravelBook_SpritesheetInfo01a_90: -1279543681
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

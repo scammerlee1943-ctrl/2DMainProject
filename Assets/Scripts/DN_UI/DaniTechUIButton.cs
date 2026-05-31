@@ -3,7 +3,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.EventSystems;
-using UnityEngine.Events;
 
 public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
@@ -30,7 +29,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (Button_Base != null)
         {
-            Button_Base.onClick.RemoveListener(new UnityAction(OnClickSetSelectUI));
+            Button_Base.onClick.RemoveAllListeners();
         }
         OnHoverButtonEvent = null;
     }
@@ -40,10 +39,16 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
         PlayHoverAnimation();
         PlayHoverSound();
         OnHoverButtonEvent?.Invoke();
+
+        if (CursorManager.Inst != null)
+            CursorManager.Inst.SetHover(true);
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         PlayUnHoverAnimation();
+
+        if (CursorManager.Inst != null)
+            CursorManager.Inst.SetHover(false);
     }
 
     public void BindOnHoverButtonEvent(Action onHoverCallback)
@@ -83,7 +88,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if(Button_Base == null) return;
 
-        Button_Base.onClick.AddListener(new UnityAction(onClickCallback));
+        Button_Base.onClick.AddListener(onClickCallback.Invoke);
 
     }
 
@@ -91,7 +96,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (Button_Base == null) return;
 
-        Button_Base.onClick.RemoveListener(new UnityAction(onClickCallback));
+        Button_Base.onClick.RemoveListener(onClickCallback.Invoke);
     }
 
     public void ChangeButtonText(string buttonStr)

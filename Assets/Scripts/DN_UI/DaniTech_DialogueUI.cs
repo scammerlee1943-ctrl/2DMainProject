@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Cysharp.Threading.Tasks;
+using System.Threading;
 
 public class DaniTech_DialogueUI : DaniTechUIBase
 {
@@ -8,18 +10,55 @@ public class DaniTech_DialogueUI : DaniTechUIBase
     [SerializeField] private Text Text_Character;
     [SerializeField] private Text Text_Description;
     [SerializeField] private DaniTechUIButton Button_Next;
+    [SerializeField] private float _typingDelay = 0.03f;
 
     private string _currentDialogueId;
     private Queue<string> _descriptionQueue = new Queue<string>();
+    private bool _isOpenedThisFrame = false;
+    private CancellationTokenSource _typingCts;
+    private bool _isTyping = false;
+    private string _currentFullText = "";
 
     private void OnEnable()
     {
         Button_Next.BindOnClickButtonEvent(OnClick_Next);
+        _isOpenedThisFrame = true;
+    }
+    private void OnDisable()
+    {
+        if (_typingCts != null)
+        {
+            _typingCts.Cancel();
+        }
+    }
+    private void Update()
+    {
+        if (_isOpenedThisFrame == true)
+        {
+            _isOpenedThisFrame = false;
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            OnClick_Next();
+        }
     }
 
     // 다이얼로그에서 Next 버튼이 눌러질때 호출된다
     public void OnClick_Next()
     {
+        if (_isTyping == true)
+        {
+            if (_typingCts != null)
+            {
+                _typingCts.Cancel();
+            }
+            Text_Description.text = _currentFullText;
+            _isTyping = false;
+            return;
+        }
+
         // 다음 대사가 있는지 체크한다
         bool isNextDescriptionExist = CheckAndSetDescription();
 
@@ -118,6 +157,31 @@ public class DaniTech_DialogueUI : DaniTechUIBase
 
     private void SetCurrentDialogueDescription(string description)
     {
-        Text_Description.text = description;
+        _currentFullText = description;
+        PlayTypingEffect(description).Forget();
+    }
+
+    private async UniTaskVoid PlayTypingEffect(string description)
+    {
+        if (_typingCts != null)
+        {
+            _typingCts.Cancel();
+        }
+
+        _typingCts = new CancellationTokenSource();
+        var token = _typingCts.Token;
+
+        _isTyping = true;
+        Text_Description.text = "";
+
+        for (int i = 0; i < description.Length; i++)
+        {
+            Text_Description.text += description[i];
+            bool isCanceled = await UniTask.Delay(
+                (int)(_typingDelay * 1000), cancellationToken: token).SuppressCancellationThrow();
+            if (isCanceled) return;
+        }
+
+        _isTyping = false;
     }
 }

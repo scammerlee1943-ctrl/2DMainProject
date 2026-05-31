@@ -31,12 +31,14 @@ public class DaniTech_SpawnSpot : MonoBehaviour
     [SerializeField] private Collider2D Collider_OnSpawnStart;
     [SerializeField] private Animator Animator_Box;
 
+    [SerializeField] private InteractKeyUI InteractKeyUI;
+
     private bool _hasSpokenBefore = false;
     private bool _isPlayerInRange = false;
 
     private void Awake()
     {
-        if(_startSpawnType == DNStartSpawnType.OnAwake)
+        if (_startSpawnType == DNStartSpawnType.OnAwake)
         {
             StartSpawn();
         }
@@ -57,8 +59,14 @@ public class DaniTech_SpawnSpot : MonoBehaviour
     }
     private void Update()
     {
-        if (_isPlayerInRange == true && Input.GetKeyDown(KeyCode.E))
+        if (_isPlayerInRange == false) return;
+        if (DaniTechUIManager.Instance.IsOpenedUI(DaniTechUIType.DNDialogueUI) == true) return;
+
+        ShowInteractKey();
+
+        if (Input.GetKeyDown(KeyCode.F))
         {
+            HideInteractKey();
             StartSpawn();
         }
     }
@@ -81,19 +89,23 @@ public class DaniTech_SpawnSpot : MonoBehaviour
             else if (_startSpawnType == DNStartSpawnType.OnInteract)
             {
                 _isPlayerInRange = true;
+                ShowInteractKey();
             }
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") == true)
-        {
-            _isPlayerInRange = false;
+        if (collision.CompareTag("Player") == false) return;
 
-            if (_spawnSpotType == DNSpawnSpotType.Tutorial)
-            {
-                DaniTechUIManager.Instance.HideInteractUI();
-            }
+        _isPlayerInRange = false;
+
+        if (_startSpawnType == DNStartSpawnType.OnRange && _spawnSpotType == DNSpawnSpotType.Tutorial)
+        {
+            DaniTechUIManager.Instance.HideInteractUI();
+        }
+        else if (_startSpawnType == DNStartSpawnType.OnInteract)
+        {
+            HideInteractKey();
         }
     }
 
@@ -141,5 +153,15 @@ public class DaniTech_SpawnSpot : MonoBehaviour
     {
         this.gameObject.SetActive(false);
     }
+    private void ShowInteractKey()
+    {
+        if (InteractKeyUI == null) return;
+        InteractKeyUI.ShowKey(InteractKeyType.F);
+    }
 
+    private void HideInteractKey()
+    {
+        if (InteractKeyUI == null) return;
+        InteractKeyUI.HideKey();
+    }
 }

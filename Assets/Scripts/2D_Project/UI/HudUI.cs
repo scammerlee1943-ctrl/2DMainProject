@@ -10,7 +10,7 @@ public class HudUI : DaniTechUIBase
     [SerializeField] private GameObject Prefab_HudHeight;
     [SerializeField] private Transform Transform_Root;
 
-    private void OnEnable()
+    private void Start()
     {
         if (DaniTechGameObjectManager.Inst == null) return;
         var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();
@@ -18,6 +18,10 @@ public class HudUI : DaniTechUIBase
         player.OnHeightChanged += UpdateHeight;
     }
 
+    private void OnEnable()
+    {
+
+    }
     private void OnDisable()
     {
         var player = DaniTechGameObjectManager.Inst.GetLocalPlayer();

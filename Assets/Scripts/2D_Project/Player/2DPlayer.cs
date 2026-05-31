@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 public class Player : MonoBehaviour
 {
     [Header("이동 설정")]
@@ -37,6 +36,7 @@ public class Player : MonoBehaviour
     private float _currentJumpForce = 0f;
     private float _jumpDirection;
     private float _maxJumpY;
+    private float _allTimeMaxHeight;
 
     private bool _isGrounded;
     private bool _lookRight = true;
@@ -57,16 +57,10 @@ public class Player : MonoBehaviour
         _rigidBody = GetComponent<Rigidbody2D>();
         _rigidBody.constraints = RigidbodyConstraints2D.FreezeRotation;
         _originVisualLocalPos = Transform_Visual.localPosition;
-        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
-
-        var hudUI = DaniTechUIManager.Instance.GetOpenedUI(DaniTechUIRootType.MainUI, DaniTechUIType.HudUI);
-        if (hudUI is HudUI hud)
-        {
-            OnHeightChanged += hud.UpdateHeight;
-        }
     }
     private void Start()
     {
+        DaniTechGameObjectManager.Inst.RegisterLocalPlayer(this);
     }
 
     private void Update()
@@ -94,7 +88,12 @@ public class Player : MonoBehaviour
             _maxJumpY = transform.position.y;
         }
 
-        OnHeightChanged?.Invoke(transform.position.y, _maxJumpY);
+        // 전체 최고 높이는 별도로 갱신
+        if (transform.position.y > _allTimeMaxHeight)
+        {
+            _allTimeMaxHeight = transform.position.y;
+        }
+        OnHeightChanged?.Invoke(transform.position.y, _allTimeMaxHeight);
 
         // 착지 처리
         if (_isGrounded && _rigidBody.linearVelocity.y <= 0.01f)
@@ -241,6 +240,7 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+        _maxJumpY = transform.position.y;
         float chargeRatio = (_currentJumpForce - _minJumpForce) / (_maxJumpForce - _minJumpForce);
         float horizontalForce = 0f;
 

@@ -11,7 +11,6 @@ public enum EntityAnimState
     Stun,
     Charge,
     Fallen
-
 }
 
 public class EntityAnimatorController : MonoBehaviour

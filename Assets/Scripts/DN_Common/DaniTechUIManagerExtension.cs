@@ -36,6 +36,7 @@ public enum DaniTechUIType
 
 public static class DaniTechUIManagerExtension
 {
+    private static int _interactUIOpenCount = 0;
     public static string GetUIPath(this DaniTechUIManager uiManager, DaniTechUIRootType uiRootType, DaniTechUIType uiType)
     {
         string path = string.Empty; // "" == string.Empty
@@ -208,12 +209,19 @@ public static class DaniTechUIManagerExtension
 
     public static void ShowInteractUI(this DaniTechUIManager uiManager)
     {
+        _interactUIOpenCount++;
         uiManager.OpenUI(DaniTechUIRootType.MainUI, DaniTechUIType.InteractUI);
     }
 
     public static void HideInteractUI(this DaniTechUIManager uiManager)
     {
-        uiManager.CloseUI(DaniTechUIRootType.MainUI, DaniTechUIType.InteractUI);
+        _interactUIOpenCount--;
+
+        if (_interactUIOpenCount <= 0)
+        {
+            _interactUIOpenCount = 0;
+            uiManager.CloseUI(DaniTechUIRootType.MainUI, DaniTechUIType.InteractUI);
+        }
     }
 }
 

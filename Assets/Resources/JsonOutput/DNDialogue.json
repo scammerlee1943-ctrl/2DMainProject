@@ -78,5 +78,51 @@
     "SelectionDialogueIdList": null,
     "TexturePath": null,
     "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_3_100",
+    "CharacterDataId": null,
+    "Description": "\"야아오옹\"",
+    "NextDialogueId": "dialogue_mainstream_1_3_200",
+    "SelectionNameList": null,
+    "SelectionDialogueIdList": null,
+    "TexturePath": null,
+    "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_3_200",
+    "CharacterDataId": null,
+    "Description": "\"우리가 찾던 고양이다! 추르를 줘볼까?\"",
+    "NextDialogueId": null,
+    "SelectionNameList": [
+      "준다",
+      "안준다"
+    ],
+    "SelectionDialogueIdList": [
+      "dialogue_mainstream_1_3_300",
+      "dialogue_mainstream_1_3_400"
+    ],
+    "TexturePath": null,
+    "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_3_300",
+    "CharacterDataId": null,
+    "Description": "\"냐옹~ (고양이가 기분 좋게 따라온다)\"",
+    "NextDialogueId": null,
+    "SelectionNameList": null,
+    "SelectionDialogueIdList": null,
+    "TexturePath": null,
+    "VoicePath": null
+  },
+  {
+    "Id": "dialogue_mainstream_1_3_400",
+    "CharacterDataId": null,
+    "Description": "\"고양이가 시무룩하게 쳐다본다...\"",
+    "NextDialogueId": null,
+    "SelectionNameList": null,
+    "SelectionDialogueIdList": null,
+    "TexturePath": null,
+    "VoicePath": null
   }
 ]

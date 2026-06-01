@@ -12,6 +12,7 @@ public class DaniTechGameObjectManager : MonoBehaviour
 
     // 생성된 오브젝트의 키가 됨
     private int _objectInstanceKeyGenerator = 0;
+    private Player _localPlayer;
 
     // 생성된 오브젝트의 생명을 보관
     private Dictionary<int, GameObject> _createdGameObjectContainer = new Dictionary<int, GameObject>();
@@ -21,7 +22,6 @@ public class DaniTechGameObjectManager : MonoBehaviour
     {
         Inst = this;
     }
-    private Player _localPlayer;
 
     public void RegisterLocalPlayer(Player player)
     {

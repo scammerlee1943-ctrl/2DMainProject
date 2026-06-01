@@ -33,7 +33,7 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 
     [SerializeField] private InteractKeyUI InteractKeyUI;
 
-    private bool _hasSpokenBefore = false;
+    private bool _isFirstCalled= false;
     private bool _isPlayerInRange = false;
 
     private void Awake()
@@ -137,10 +137,10 @@ public class DaniTech_SpawnSpot : MonoBehaviour
                 //this.gameObject.SetActive(false);
                 break;
             case DNSpawnSpotType.NPCDialogue:
-                if (_hasSpokenBefore == false)
+                if (_isFirstCalled == true)
                 {
                     DaniTechUIManager.Instance.OpenDialogueUI(_spawnObjectDataId);
-                    _hasSpokenBefore = true;
+                    _isFirstCalled = false;
                 }
                 else
                 {

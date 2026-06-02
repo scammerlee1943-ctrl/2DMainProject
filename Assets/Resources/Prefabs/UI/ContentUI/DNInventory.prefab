@@ -815,7 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DaniTech_SampleInventoryUI
   Prefab_Slot: {fileID: 3347826845903962747, guid: 08788cf599d6e3541a5cae1371483ca2, type: 3}
   Transform_UISlotRoot: {fileID: 9190561509015252472}
-  Button_CreateSlot: {fileID: 3367850852224106352}
+  Button_UseSelectItem: {fileID: 6570888020692128135}
   Button_CloseSelf: {fileID: 4785431841746239734}
   Button_CloseSelfAllArea: {fileID: 8028068569913850134}
 --- !u!1 &7096038762751149733

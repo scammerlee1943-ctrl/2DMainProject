@@ -49,6 +49,7 @@ public class DNItemData : GameDataBase
     public string Name;
     public string Description;
     public string ItemType;
+    public string UseItemType;
     public string Grade;
     public string MaxStackCount;
     public string SellingPrice;

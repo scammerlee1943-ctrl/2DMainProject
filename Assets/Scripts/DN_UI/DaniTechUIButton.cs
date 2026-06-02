@@ -12,6 +12,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     [SerializeField] private Image Image_Select;
 
     private Action OnHoverButtonEvent;
+    private bool _useClickAnimation = true;
 
     private void Awake()
     {
@@ -27,6 +28,7 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     private void OnDisable()
     {
+        transform.DOKill();
         if (Button_Base != null)
         {
             Button_Base.onClick.RemoveAllListeners();
@@ -114,7 +116,10 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
             bool currentActive = Image_Select.gameObject.activeSelf;
             Image_Select.gameObject.SetActive(!currentActive);
         }
-        PlayClickAnimation();
+        if (_useClickAnimation == true)
+        {
+            PlayClickAnimation();
+        }
         PlayClickSound();
     }
 
@@ -132,6 +137,11 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
         sequence.Append(transform.DOScaleX(1f, 0.2f).SetEase(Ease.OutBack));
         sequence.Join(transform.DOScaleY(1f, 0.2f).SetEase(Ease.OutBack));
         sequence.Join(transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack));
+    }
+
+    public void SetUseClickAnimation(bool use)
+    {
+        _useClickAnimation = use;
     }
 
     private void PlayHoverSound()

@@ -54,6 +54,23 @@ public class DaniTechGameManager : MonoBehaviour
 
         _playerModel.ItemList.Add(newItem);
     }
+    
+    public bool UseItem(string itemDataId)
+    {
+        var item = _playerModel.ItemList.Find(x => x.ItemDataId == itemDataId);
+        if(item == null)
+        {
+            Debug.LogWarning($"{itemDataId} 아이템을 보유하고 있지 않습니다.");
+            return false;
+        }
+        item.ItemStackCount--;
+
+        if(item.ItemStackCount == 0)
+        {
+            _playerModel.ItemList.Remove(item);
+        }
+        return true;
+    }
 
     public List<DaniTechItemModel> GetPlayerItemList()
     {

@@ -92,7 +92,7 @@
   {
     "Id": "dialogue_mainstream_1_3_200",
     "CharacterDataId": null,
-    "Description": "\"우리가 찾던 고양이다! 추르를 줘볼까?\"",
+    "Description": "\"우리가 찾던 고양이다! 츄르를 줘볼까?\"",
     "NextDialogueId": null,
     "SelectionNameList": [
       "준다",

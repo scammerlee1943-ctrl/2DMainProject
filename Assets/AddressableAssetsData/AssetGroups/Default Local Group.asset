@@ -15,6 +15,11 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: 80e8e0aaab7e37b4084b72f287df5f5d
   m_SerializeEntries:
+  - m_GUID: 06dae77e78eb52245a2db0969e06f64a
+    m_Address: Icon/Icon_Item_Churu_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1c3b15e9ea28396478d6a10a0bd92e99
     m_Address: SFX_UI_Hover_2
     m_ReadOnly: 0
@@ -82,6 +87,11 @@ MonoBehaviour:
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: add7a90d13ebb1f49a7cf5b86f6c0d9c
     m_Address: SFX_UI_Hover_1
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b24cb5ee12a5b5347a24052dcd173e37
+    m_Address: 2DPrefab/DropItem_Churu
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

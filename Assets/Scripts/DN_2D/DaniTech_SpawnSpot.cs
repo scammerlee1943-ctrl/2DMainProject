@@ -33,7 +33,7 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 
     [SerializeField] private InteractKeyUI InteractKeyUI;
 
-    private bool _isFirstCalled= false;
+    private bool _isFirstCalled= true;
     private bool _isPlayerInRange = false;
 
     private void Awake()
@@ -112,6 +112,7 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 
     private void StartSpawn()
     {
+        Debug.Log($"StartSpawn 호출됨! 타입: {_spawnSpotType}, isFirst: {_isFirstCalled}");
         // TODO - 개선점
         // 이미 스폰된 객체가 있다면, 해당 객체가 사라질때까지 추가적인 스폰을 하지 않도록 추가 처리해야한다
 

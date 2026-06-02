@@ -37,5 +37,30 @@
     "DropItemDataId": "Item_Letter_1",
     "IconPath": null,
     "PrefabPath": "2DPrefab/DropItem_Letter"
+  },
+  {
+    "Id": "dropItem_Churu_1",
+    "FieldObjectType": "DropItem",
+    "Name": "츄르",
+    "Description": "드랍된 츄르",
+    "DropCountRange": [
+      1,
+      2
+    ],
+    "DropItemDataId": "Item_Churu_1",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_Churu"
+  },
+  {
+    "Id": null,
+    "FieldObjectType": null,
+    "Name": null,
+    "Description": null,
+    "DropCountRange": [
+      0
+    ],
+    "DropItemDataId": null,
+    "IconPath": null,
+    "PrefabPath": null
   }
 ]

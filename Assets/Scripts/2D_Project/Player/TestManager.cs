@@ -10,13 +10,13 @@ public class TestManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Transform_Player.position = new Vector3(3.42f, 15.37f, 0f);
+            Transform_Player.position = new Vector3(3.42f, 30.37f, 0f);
             Rigid_Player.linearVelocity = Vector2.zero;
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Transform_Player.position = new Vector3(-1.2f, 30.02f, 0f);
+            Transform_Player.position = new Vector3(7f, 65.02f, 0f);
             Rigid_Player.linearVelocity = Vector2.zero;
         }
 

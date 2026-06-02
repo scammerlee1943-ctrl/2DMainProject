@@ -28,5 +28,15 @@
     "MaxStackCount": 5,
     "SellingPrice": 1,
     "IconPath": "Icon/Icon_Item_Letter_1"
+  },
+  {
+    "Id": "Item_Churu_1",
+    "Name": "츄르",
+    "Description": "고양이가 좋아하는 츄르다.",
+    "ItemType": "Normal",
+    "Grade": "Epic",
+    "MaxStackCount": 2,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Item_Churu_1"
   }
 ]

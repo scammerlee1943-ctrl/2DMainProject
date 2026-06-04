@@ -33,6 +33,9 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 
     [SerializeField] private InteractKeyUI InteractKeyUI;
 
+    [SerializeField] private string _giveItemIdToCheck;
+    [SerializeField] private string _clearDialogueId;
+
     private bool _isFirstCalled= true;
     private bool _isPlayerInRange = false;
 
@@ -61,6 +64,20 @@ public class DaniTech_SpawnSpot : MonoBehaviour
     {
         if (_isPlayerInRange == false) return;
         if (DaniTechUIManager.Instance.IsOpenedUI(DaniTechUIType.DNDialogueUI) == true) return;
+
+        if (string.IsNullOrEmpty(_giveItemIdToCheck) == false)
+        {
+            var itemList = DaniTechGameManager.Inst.GetPlayerItemList();
+            if (itemList != null)   // ← 이 체크 추가
+            {
+                bool hasItem = itemList.Exists(x => x.ItemDataId == _giveItemIdToCheck);
+                if (hasItem == true)
+                {
+                    transform.parent.gameObject.SetActive(false);
+                    return;
+                }
+            }
+        }
 
         ShowInteractKey();
 
@@ -112,7 +129,6 @@ public class DaniTech_SpawnSpot : MonoBehaviour
 
     private void StartSpawn()
     {
-        Debug.Log($"StartSpawn 호출됨! 타입: {_spawnSpotType}, isFirst: {_isFirstCalled}");
         // TODO - 개선점
         // 이미 스폰된 객체가 있다면, 해당 객체가 사라질때까지 추가적인 스폰을 하지 않도록 추가 처리해야한다
 
@@ -138,7 +154,12 @@ public class DaniTech_SpawnSpot : MonoBehaviour
                 //this.gameObject.SetActive(false);
                 break;
             case DNSpawnSpotType.NPCDialogue:
-                if (_isFirstCalled == true)
+
+                if (IsAllCatCollected() == true)
+                {
+                    DaniTechUIManager.Instance.OpenDialogueUI(_clearDialogueId);
+                }
+                else if (_isFirstCalled == true)
                 {
                     DaniTechUIManager.Instance.OpenDialogueUI(_spawnObjectDataId);
                     _isFirstCalled = false;
@@ -164,5 +185,16 @@ public class DaniTech_SpawnSpot : MonoBehaviour
     {
         if (InteractKeyUI == null) return;
         InteractKeyUI.HideKey();
+    }
+
+    private bool IsAllCatCollected()
+    {
+        var itemList = DaniTechGameManager.Inst.GetPlayerItemList();
+        if (itemList == null) return false;
+
+
+        bool hasCat1 = itemList.Exists(x => x.ItemDataId == "Item_Cat_1");
+        bool hasCat2 = itemList.Exists(x => x.ItemDataId == "Item_Cat_2");
+        return (hasCat1 && hasCat2);
     }
 }

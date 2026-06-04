@@ -31,7 +31,8 @@ public enum DaniTechUIType
     PauseUI,
     LobbyUI,
     HudUI,
-    InteractUI
+    InteractUI,
+    PausePopupUI
 }
 
 public static class DaniTechUIManagerExtension
@@ -116,6 +117,7 @@ public static class DaniTechUIManagerExtension
             return;
         }
     }
+
     public static void OpenMusicVolume(this DaniTechUIManager uiManger)
     {
         var uiBase = uiManger.OpenContentUI(DaniTechUIType.MusicSelectUI);
@@ -125,6 +127,7 @@ public static class DaniTechUIManagerExtension
             return;
         }
     }
+
     public static void OpenSound(this DaniTechUIManager uiManger)
     {
         var uiBase = uiManger.OpenContentUI(DaniTechUIType.SoundVolumeUI);
@@ -134,6 +137,17 @@ public static class DaniTechUIManagerExtension
             return;
         }
     }
+
+    public static void OpenGameBook(this DaniTechUIManager uiManager)
+    {
+        var uiBase = uiManager.OpenContentUI(DaniTechUIType.GameBookUI);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+
     public static void OpenPause(this DaniTechUIManager uiManger)
     {
         var uiBase = uiManger.OpenContentUI(DaniTechUIType.PauseUI);
@@ -143,6 +157,17 @@ public static class DaniTechUIManagerExtension
             return;
         }
     }
+
+    public static void OpenPausePopup(this DaniTechUIManager uiManager)
+    {
+        var uiBase = uiManager.OpenPopupUI(DaniTechUIType.PausePopupUI);
+        if (uiBase == null)
+        {
+            Debug.LogWarning($"UI가 생성되지 않았습니다");
+            return;
+        }
+    }
+
     public static void OpenLobbyUI(this DaniTechUIManager uiManger)
     {
         var uiBase = uiManger.OpenContentUI(DaniTechUIType.LobbyUI);

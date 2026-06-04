@@ -226,7 +226,25 @@ public class DaniTech_DialogueUI : DaniTechUIBase
 
         // 현재 진행중인 다이얼로그 Id는 다음 다이얼로그가 있는지 체크할 때 쓸 수 있도록 보관한다
         _currentDialogueId = dialogeId;
+        bool canGiveItem = true;
 
+        if (string.IsNullOrEmpty(dialogueData.UseItemId) == false)
+        {
+            canGiveItem = DaniTechGameManager.Inst.UseItem(dialogueData.UseItemId);
+
+            if (canGiveItem == false)
+            {
+                HideSelection();
+                SetCurrentDialogueDescription("인벤토리에 츄르가 없어!");
+                SetCharacterName(null);
+                return;
+            }
+        }
+
+        if (canGiveItem == true && string.IsNullOrEmpty(dialogueData.GiveItemId) == false)
+        {
+            DaniTechGameManager.Inst.AddItem(dialogueData.GiveItemId, 1);
+        }
         HideSelection();
 
         // 혹시 현재 대사가 너무 길거나 다음 페이지 처리가 필요할 때 <np> 키워드로 잘라주자!

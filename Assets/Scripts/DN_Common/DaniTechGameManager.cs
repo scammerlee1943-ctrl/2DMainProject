@@ -32,6 +32,11 @@ public class DaniTechGameManager : MonoBehaviour
     private void LoadSaveData()
     {
         _playerModel = DaniTechNetworkManager.Inst.RequstLoadSaveData();
+
+        if (_playerModel.ItemList == null)
+        {
+            _playerModel.ItemList = new List<DaniTechItemModel>();
+        }
     }
 
     public void IncreasePlayerExp(int exp)
@@ -53,6 +58,14 @@ public class DaniTechGameManager : MonoBehaviour
         newItem.ItemStackCount = addItemCount;
 
         _playerModel.ItemList.Add(newItem);
+
+        var itemData = DaniTechGameDataManager.Instance.GetDNItemData(itemDataId);
+        string itemName = itemDataId;
+        if (itemData != null)
+        {
+            itemName = itemData.Name;
+        }
+        DaniTechUIManager.Instance.OpenSimplePopup($"인벤토리에 {itemName}이(가) 추가되었습니다!");
     }
     
     public bool UseItem(string itemDataId)

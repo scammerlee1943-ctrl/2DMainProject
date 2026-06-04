@@ -1024,7 +1024,6 @@ GameObject:
   - component: {fileID: 452928442}
   - component: {fileID: 452928439}
   - component: {fileID: 452928441}
-  - component: {fileID: 452928440}
   m_Layer: 0
   m_Name: NPC_Cat_2
   m_TagString: Untagged
@@ -1070,19 +1069,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &452928440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452928437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2cc15760d257b499eff47b8a59bb8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimatorController
-  Animator_Entity: {fileID: 452928439}
 --- !u!114 &452928441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,7 +1081,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f3e3c968735e047a9e71bf0a73566f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Npc
-  AnimatorController_Entity: {fileID: 452928440}
+  AnimatorController_Entity: {fileID: 0}
 --- !u!212 &452928442
 SpriteRenderer:
   serializedVersion: 2
@@ -2073,7 +2059,6 @@ GameObject:
   - component: {fileID: 769945498}
   - component: {fileID: 769945500}
   - component: {fileID: 769945499}
-  - component: {fileID: 769945502}
   - component: {fileID: 769945501}
   m_Layer: 0
   m_Name: NPC
@@ -2188,23 +2173,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 769945497}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2cc15760d257b499eff47b8a59bb8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimatorController
-  Animator_Entity: {fileID: 769945499}
---- !u!114 &769945502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 769945497}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d0f3e3c968735e047a9e71bf0a73566f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Npc
-  AnimatorController_Entity: {fileID: 769945501}
+  AnimatorController_Entity: {fileID: 0}
 --- !u!1 &816003775
 GameObject:
   m_ObjectHideFlags: 0
@@ -2289,11 +2261,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DaniTech_SpawnSpot
   _spawnSpotType: 4
   _startSpawnType: 4
-  _spawnObjectDataId: dialogue_mainstream_1_3_100
-  _lastDialogueId: dialogue_mainstream_1_3_200
+  _spawnObjectDataId: dialogue_mainstream_1_4_100
+  _lastDialogueId: dialogue_mainstream_1_4_200
   Collider_OnSpawnStart: {fileID: 816003777}
   Animator_Box: {fileID: 452928439}
   InteractKeyUI: {fileID: 1855026872}
+  _giveItemIdToCheck: Item_Cat_2
+  _clearDialogueId: 
 --- !u!1001 &850050746
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18068,6 +18042,8 @@ MonoBehaviour:
   Collider_OnSpawnStart: {fileID: 1336983269}
   Animator_Box: {fileID: 1718555498}
   InteractKeyUI: {fileID: 712065481}
+  _giveItemIdToCheck: Item_Cat_1
+  _clearDialogueId: 
 --- !u!4 &1391126859 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2179951074649632219, guid: 459b40ef843a8714ebbb1678a6b8e903, type: 3}
@@ -18786,7 +18762,6 @@ GameObject:
   - component: {fileID: 1718555501}
   - component: {fileID: 1718555498}
   - component: {fileID: 1718555500}
-  - component: {fileID: 1718555499}
   m_Layer: 0
   m_Name: NPC_Cat_1
   m_TagString: Untagged
@@ -18832,19 +18807,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1718555499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1718555496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d2cc15760d257b499eff47b8a59bb8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EntityAnimatorController
-  Animator_Entity: {fileID: 1718555498}
 --- !u!114 &1718555500
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18857,7 +18819,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0f3e3c968735e047a9e71bf0a73566f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Npc
-  AnimatorController_Entity: {fileID: 1718555499}
+  AnimatorController_Entity: {fileID: 0}
 --- !u!212 &1718555501
 SpriteRenderer:
   serializedVersion: 2
@@ -19006,6 +18968,8 @@ MonoBehaviour:
   Collider_OnSpawnStart: {fileID: 1793667927}
   Animator_Box: {fileID: 769945499}
   InteractKeyUI: {fileID: 267557100}
+  _giveItemIdToCheck: 
+  _clearDialogueId: dialogue_mainstream_1_5_100
 --- !u!4 &1797273345 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7737818265192872857, guid: ab8976ca7e823c048b1ad65f7b8d5d57, type: 3}

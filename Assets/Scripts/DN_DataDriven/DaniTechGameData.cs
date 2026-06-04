@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UnityEditor.Experimental;
 
 [System.Serializable]
 public class GameDataBase
@@ -70,6 +69,8 @@ public class DNDialogueData : GameDataBase
     public string NextDialogueId;
     public List<string> SelectionNameList;
     public List<string> SelectionDialogueIdList;
+    public string UseItemId;
+    public string GiveItemId;
     public string TexturePath;
     public string VoicePath;
 }

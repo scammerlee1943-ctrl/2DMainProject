@@ -137,6 +137,8 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
         sequence.Append(transform.DOScaleX(1f, 0.2f).SetEase(Ease.OutBack));
         sequence.Join(transform.DOScaleY(1f, 0.2f).SetEase(Ease.OutBack));
         sequence.Join(transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack));
+
+        sequence.SetUpdate(true);
     }
 
     public void SetUseClickAnimation(bool use)
@@ -175,16 +177,16 @@ public class DaniTechUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExi
     private void PlayHoverAnimation()
     {
         transform.DOKill();
-        transform.DOScaleX(1.1f, 0.2f).SetEase(Ease.OutBack);
-        transform.DOScaleY(1.1f, 0.35f).SetEase(Ease.OutBack);
-        transform.DORotate(new Vector3(0f, 0f, 5f * GetRandomDir()), 0.1f).SetEase(Ease.OutBack);
+        transform.DOScaleX(1.1f, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
+        transform.DOScaleY(1.1f, 0.35f).SetEase(Ease.OutBack).SetUpdate(true);
+        transform.DORotate(new Vector3(0f, 0f, 5f * GetRandomDir()), 0.1f).SetEase(Ease.OutBack).SetUpdate(true);
     }
 
     private void PlayUnHoverAnimation()
     {
         transform.DOKill();
-        transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack);
-        transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack);
+        transform.DOScale(Vector3.one, 0.2f).SetEase(Ease.OutBack).SetUpdate(true);
+        transform.DORotate(Vector3.zero, 0.1f).SetEase(Ease.OutBack).SetUpdate(true);
     }
 
     private float GetRandomDir()

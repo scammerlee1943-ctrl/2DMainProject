@@ -14,8 +14,6 @@ public class DaniTech_MainUI : DaniTechUIBase
     [SerializeField] private float _hiddenY = 100f;             
     [SerializeField] private float _shownY = 0f;                
 
-
-    private bool _isPaused = false;
     private bool _isOpen = true;
 
     private void OnEnable()
@@ -29,7 +27,10 @@ public class DaniTech_MainUI : DaniTechUIBase
 
     private void OnDisable()
     {
+        Btn_OpenInventory?.UnBindOnClickButtonEvent(OnClick_OpenInventory);
+        Btn_OpenGameBook?.UnBindOnClickButtonEvent(OnClick_OpenGameBook);
         Btn_Pause?.UnBindOnClickButtonEvent(OnClick_Pause);
+        Btn_Toggle?.UnBindOnClickButtonEvent(OnClick_Toggle);
     }
 
     public void OnClick_Toggle()
@@ -48,7 +49,7 @@ public class DaniTech_MainUI : DaniTechUIBase
     }
     public void OnClick_OpenGameBook()
     {
-        DaniTechUIManager.Instance.OpenContentUI(DaniTechUIType.GameBookUI);
+        DaniTechUIManager.Instance.OpenGameBook();
     }
     public void OnClick_OpenInventory()
     {
@@ -57,16 +58,7 @@ public class DaniTech_MainUI : DaniTechUIBase
     }
     public void OnClick_Pause()
     {
-        if (_isPaused)
-        {
-            _isPaused = false;
-            Time.timeScale = 1f;
-        }
-        else
-        {
-            _isPaused = true;
-            Time.timeScale = 0f;
-        }
-
+        Time.timeScale = 0f;
+        DaniTechUIManager.Instance.OpenPausePopup();
     }
 }

@@ -52,15 +52,29 @@
     "PrefabPath": "2DPrefab/DropItem_Churu"
   },
   {
-    "Id": null,
-    "FieldObjectType": null,
-    "Name": null,
-    "Description": null,
+    "Id": "dropItem_Cat_1",
+    "FieldObjectType": "DropItem",
+    "Name": "고양이",
+    "Description": "드랍된 고양이 1",
     "DropCountRange": [
-      0
+      1,
+      1
     ],
-    "DropItemDataId": null,
+    "DropItemDataId": "Item_Cat_1",
     "IconPath": null,
-    "PrefabPath": null
+    "PrefabPath": "2DPrefab/DropItem_Cat_1"
+  },
+  {
+    "Id": "dropItem_Cat_2",
+    "FieldObjectType": "DropItem",
+    "Name": "고양이",
+    "Description": "드랍된 고양이 2",
+    "DropCountRange": [
+      1,
+      1
+    ],
+    "DropItemDataId": "Item_Cat_2",
+    "IconPath": null,
+    "PrefabPath": "2DPrefab/DropItem_Cat_2"
   }
 ]

@@ -38,5 +38,25 @@
     "MaxStackCount": 2,
     "SellingPrice": 1,
     "IconPath": "Icon/Icon_Item_Churu_1"
+  },
+  {
+    "Id": "Item_Cat_1",
+    "Name": "흰고양이",
+    "Description": "잃어버린 고양이 첫째",
+    "ItemType": "Normal",
+    "Grade": "Epic",
+    "MaxStackCount": 1,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Item_Cat_1"
+  },
+  {
+    "Id": "Item_Cat_2",
+    "Name": "노랭고양이",
+    "Description": "잃어버린 고양이 둘째",
+    "ItemType": "Normal",
+    "Grade": "Epic",
+    "MaxStackCount": 1,
+    "SellingPrice": 1,
+    "IconPath": "Icon/Icon_Item_Cat_2"
   }
 ]

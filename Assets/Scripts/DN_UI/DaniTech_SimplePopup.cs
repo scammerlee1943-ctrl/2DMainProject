@@ -2,25 +2,33 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using System.Threading;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class DaniTech_SimplePopup : DaniTechUIBase
 {
+    [SerializeField] private float _hiddenY = 318f;
+    [SerializeField] private float _shownY = 150f;
     [SerializeField] Text Text_Msg;
+
 
     // 유니테스크 취소 1-1) 대기 시간이 긴 경우 이 UI가 중간에 닫힌다면 메모리누수를 방지하기 위해 취소처리하자
     private CancellationTokenSource _cancelToken;
-
+    private RectTransform _rectTransform;
 
     //WaitForSeconds _waitForSec = new WaitForSeconds(1.5f)
-
+    private void Awake()
+    {
+        _rectTransform = GetComponent<RectTransform>();
+    }
     // 기능 확장
     private void OnEnable()
     {
+        PlayShowAnimation();
         // 아래 코루틴 대신 UniTask로 바꿔보자
-            // StartCoroutine(CoCloseSelf());
+        // StartCoroutine(CoCloseSelf());
         CloseSelfAsync().Forget();
 
         // 유니테스크를 이용한 샘플
@@ -30,6 +38,7 @@ public class DaniTech_SimplePopup : DaniTechUIBase
 
     private void OnDisable()
     {
+        _rectTransform.DOKill();
         // 혹시 이 팝업이 1.5초보다 빨리 닫히는 경우 비동기 대기를 취소
         if (_cancelToken != null)
         {
@@ -37,6 +46,13 @@ public class DaniTech_SimplePopup : DaniTechUIBase
             _cancelToken.Dispose();
             _cancelToken = null;
         }
+    }
+    private void PlayShowAnimation()
+    {
+        // 화면 밖 위에 놓고
+        _rectTransform.anchoredPosition = new Vector2(_rectTransform.anchoredPosition.x, _hiddenY);
+        // 원래 자리로 내려온다
+        _rectTransform.DOAnchorPosY(_shownY, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
     }
 
     private async UniTask UIWaitUntilNextFrame()
@@ -69,7 +85,7 @@ public class DaniTech_SimplePopup : DaniTechUIBase
             // 취소 토큰은 꼭 필요한 것은 아니지만, 대기 시간이 긴 경우는 이 작업이 끝나기 전에
             // UI가 닫히거나 파괴될 수 있다면 비동기 취소 토큰 처리를 해줄 필요가 있다
             // 이 게임오브젝트가 비활성화가 아니라 파괴형태로 사라진다면 편하게 이걸 전달 해줘도 된다->>> this.GetCancellationTokenOnDestroy();
-        await UniTask.Delay(TimeSpan.FromSeconds(1.5), cancellationToken: _cancelToken.Token);
+        await UniTask.Delay(TimeSpan.FromSeconds(1.5), DelayType.UnscaledDeltaTime, cancellationToken: _cancelToken.Token);
 
         // 완료 후 스스로 닫자
         DaniTechUIManager.Instance.ClosePopupUI(DaniTechUIType.DNSimplePopup);

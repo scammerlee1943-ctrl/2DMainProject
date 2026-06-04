@@ -4,7 +4,6 @@ using UnityEngine;
 public class SideUI : DaniTechUIBase
 {
 
-    [SerializeField] private DaniTechUIButton Btn_OpenSetting;
     [SerializeField] private DaniTechUIButton Btn_OpenMusic;
     [SerializeField] private DaniTechUIButton Btn_OpenSoundVolume;
     [SerializeField] private DaniTechUIButton Btn_OpenSave;
@@ -21,7 +20,6 @@ public class SideUI : DaniTechUIBase
     {
         RectTransform_ToggleArrow.localRotation = Quaternion.Euler(0f, 0f, 90f);
 
-        Btn_OpenSetting?.BindOnClickButtonEvent(OnClick_OpenSetting);
         Btn_OpenMusic?.BindOnClickButtonEvent(OnClick_OpenMusic);
         Btn_OpenSoundVolume?.BindOnClickButtonEvent(OnClick_OpenSoundVolume);
         Btn_OpenSave?.BindOnClickButtonEvent(OnClick_OpenSave);
@@ -29,10 +27,10 @@ public class SideUI : DaniTechUIBase
     }
     private void OnDisable()
     {
-        Btn_OpenSetting?.UnBindOnClickButtonEvent(OnClick_OpenSetting);
         Btn_OpenMusic?.UnBindOnClickButtonEvent(OnClick_OpenMusic);
         Btn_OpenSoundVolume?.UnBindOnClickButtonEvent(OnClick_OpenSoundVolume);
         Btn_OpenSave?.UnBindOnClickButtonEvent(OnClick_OpenSave);
+        Btn_Toggle?.BindOnClickButtonEvent(OnClick_Toggle);
     }
 
     public void OnClick_Toggle() 
@@ -47,13 +45,6 @@ public class SideUI : DaniTechUIBase
         {
             RectTransform_ToggleArrow.DORotate(new Vector3(0f, 0f, -90f), 0.2f);
             RectTransform_Buttons.DOAnchorPosX(_hiddenX, 0.3f).SetEase(Ease.OutBack);
-        }
-    }
-    public void OnClick_OpenSetting()
-    {
-        if (DaniTechUIManager.Instance != null)
-        {
-            DaniTechUIManager.Instance.OpenSetting();
         }
     }
 
